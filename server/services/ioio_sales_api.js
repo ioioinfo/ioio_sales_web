@@ -13,28 +13,29 @@
  └──────────────────────────────────────────────────────────────┘
 */
 
-exports.register = function(server, options, next){
+var _ = require('lodash');
+var eventproxy = require('eventproxy');
+const util = require('util');
+const uu_request = require('../utils/uu_request');
 
-    var load_module = function(key, path) {
-        var module = require(path)(server);
-        if (typeof module.init === 'function') { module.init(); }
-        if (typeof module.refresh === 'function') { module.refresh(); }
-        server.expose(key, module);
+var host = "http://211.149.248.241:18028/";
+
+var nav = function(server) {
+    return {
+        //查询部门
+        get_departments: function(cb) {
+            var url = host + "get_departments";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+
+
     };
-
-    load_module('person', './person.js');
-    load_module('things', './things.js');
-    load_module('amap', './amap.js');
-    load_module('wx_api', './wx_api.js');
-    load_module('fsm', './fsm.js');
-    load_module('task', './task.js');
-    load_module('hr', './hr.js');
-    load_module('notify', './notify.js');
-    load_module('ioio_sales_api', './ioio_sales_api.js');
-
-    next();
-}
-
-exports.register.attributes = {
-    name: 'services'
 };
+
+module.exports = nav;
