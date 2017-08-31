@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 188);
+/******/ 	return __webpack_require__(__webpack_require__.s = 186);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23032,9 +23032,7 @@ module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 186 */,
-/* 187 */,
-/* 188 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23053,7 +23051,52 @@ var ReactDOM = __webpack_require__(85);
 
 var AdminLeft = __webpack_require__(84);
 var Table = __webpack_require__(83);
-var PageTab = __webpack_require__(82);
+var PageTab = __webpack_require__(82);;
+// 查看
+function alertSearch(id) {
+  $('#background').show();
+  $('#edit_part').show();
+  $.get("/search_channel_byId", { id: id }, function (data) {
+    var id = data.rows[0].id;
+    var name = data.rows[0].name;
+    var code = data.rows[0].code;
+    var source_level = data.rows[0].department_id;
+    $('#id').val(id);
+    $('#name').val(name);
+    $('#code').val(code);
+    $('#department_id').val(source_level);
+  });
+}
+// 编辑
+function alertEdit(refresh) {
+  var id = $('#id').val();
+  var name = $('#name').val();
+  var code = $('#code').val();
+  var department_id = $('#department_id').val();
+  $.post("/update_channel", { id: id, name: name, code: code, department_id: department_id }, function (data) {
+    if (data.success) {
+      alert('修改成功');
+      $('#edit_part').hide();
+      $('#background').hide();
+      refresh();
+    }
+  });
+}
+
+// 新建
+function alertNew(refresh) {
+  var name = $('#new_name').val();
+  var code = $('#new_code').val();
+  var department_id = $('#new_department_id').val();
+  $.post("/save_channel", { name: name, code: code, department_id: department_id }, function (data) {
+    if (data.success) {
+      alert('新建成功');
+      $('#new_part').hide();
+      $('#background').hide();
+      refresh();
+    }
+  });
+}
 
 var AdminIndex = function (_React$Component) {
   _inherits(AdminIndex, _React$Component);
@@ -23069,7 +23112,7 @@ var AdminIndex = function (_React$Component) {
     value: function render() {
       return React.createElement(
         'div',
-        { className: 'admin_index' },
+        { className: 'admin_index position_relative' },
         React.createElement(AdminLeft, null),
         React.createElement(AdminRight, null)
       );
@@ -23080,6 +23123,7 @@ var AdminIndex = function (_React$Component) {
 }(React.Component);
 
 ;
+
 // 右边
 
 var AdminRight = function (_React$Component2) {
@@ -23093,6 +23137,8 @@ var AdminRight = function (_React$Component2) {
     _this2.setPage = _this2.setPage.bind(_this2);
     _this2.handleSort = _this2.handleSort.bind(_this2);
     _this2.loadData = _this2.loadData.bind(_this2);
+    _this2.refresh = _this2.refresh.bind(_this2);
+    _this2.handNew = _this2.handNew.bind(_this2);
     // 初始化一个空对象
     _this2.state = { tabthitems: [], tabtritems: [], allNum: 0, everyNum: 20, thisPage: 1, sort: { name: "", dir: "" } };
     return _this2;
@@ -23112,6 +23158,8 @@ var AdminRight = function (_React$Component2) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var tableHeight = $(window).height() - 195;
+      $("#table").css("height", tableHeight + "px");
       this.loadData({});
     }
   }, {
@@ -23125,11 +23173,28 @@ var AdminRight = function (_React$Component2) {
       this.loadData({ sort: sort });
     }
   }, {
+    key: 'refresh',
+    value: function refresh() {
+      this.loadData({});
+    }
+
+    // 新建
+
+  }, {
+    key: 'handNew',
+    value: function handNew(e) {
+      $('#background').show();
+      $('#new_part').show();
+      var name = $('#new_name').val('');
+      var code = $('#new_code').val('');
+      var source_level = $('#new_source_level').val('');
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
-        { className: 'admin_right col-xs-12 col-sm-8 col-md-10' },
+        { className: 'admin_right col-xs-12 col-sm-8 col-md-10 position_relative' },
         React.createElement(AdminRightTop, null),
         React.createElement(
           'div',
@@ -23146,12 +23211,15 @@ var AdminRight = function (_React$Component2) {
           ),
           React.createElement(
             'button',
-            { className: 'admin_creat_button1' },
+            { className: 'admin_creat_button1', onClick: this.handNew },
             '\u65B0 \u5EFA'
           )
         ),
-        React.createElement(Table, { tabthitems: this.state.tabthitems, tabtritems: this.state.tabtritems, sort: this.state.sort, onSort: this.handleSort }),
-        React.createElement(PageTab, { setPage: this.setPage, allNum: this.state.allNum, everyNum: this.state.everyNum, thisPage: this.state.thisPage })
+        React.createElement(Table, { tabthitems: this.state.tabthitems, tabtritems: this.state.tabtritems, sort: this.state.sort, onSort: this.handleSort, refresh: this.refresh, checkTd: checkTd }),
+        React.createElement(PageTab, { setPage: this.setPage, allNum: this.state.allNum, everyNum: this.state.everyNum, thisPage: this.state.thisPage }),
+        React.createElement(AlertEdit, { refresh: this.refresh }),
+        React.createElement(AlertNew, { refresh: this.refresh }),
+        React.createElement('div', { id: 'background', className: 'position_absolute' })
       );
     }
   }]);
@@ -23161,10 +23229,208 @@ var AdminRight = function (_React$Component2) {
 
 ;
 
+var AlertEdit = function (_React$Component3) {
+  _inherits(AlertEdit, _React$Component3);
+
+  function AlertEdit(props) {
+    _classCallCheck(this, AlertEdit);
+
+    var _this3 = _possibleConstructorReturn(this, (AlertEdit.__proto__ || Object.getPrototypeOf(AlertEdit)).call(this, props));
+
+    _this3.handClick = _this3.handClick.bind(_this3);
+    _this3.handSave = _this3.handSave.bind(_this3);
+    return _this3;
+  }
+
+  _createClass(AlertEdit, [{
+    key: 'handClick',
+    value: function handClick(e) {
+      $('#edit_part').hide();
+      $('#background').hide();
+    }
+  }, {
+    key: 'handSave',
+    value: function handSave() {
+      var refresh = this.props.refresh;
+      alertEdit(refresh);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { id: 'edit_part', className: 'position_absolute animation_one' },
+        React.createElement(
+          'div',
+          { className: 'text_align_right' },
+          React.createElement('i', { className: 'fa fa-times fa-fw', onClick: this.handClick })
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            'id:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'id' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6E20\u9053\u540D\u79F0:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'name' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6E20\u9053\u7F16\u53F7:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'code' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6E20\u9053\u90E8\u95E8id:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'department_id' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_button_wrap', onClick: this.handSave },
+          '\u4FEE \u6539'
+        )
+      );
+    }
+  }]);
+
+  return AlertEdit;
+}(React.Component);
+
+;
+
+var AlertNew = function (_React$Component4) {
+  _inherits(AlertNew, _React$Component4);
+
+  function AlertNew(props) {
+    _classCallCheck(this, AlertNew);
+
+    var _this4 = _possibleConstructorReturn(this, (AlertNew.__proto__ || Object.getPrototypeOf(AlertNew)).call(this, props));
+
+    _this4.handClick = _this4.handClick.bind(_this4);
+    _this4.handNew = _this4.handNew.bind(_this4);
+    return _this4;
+  }
+
+  _createClass(AlertNew, [{
+    key: 'handClick',
+    value: function handClick(e) {
+      $('#new_part').hide();
+      $('#background').hide();
+    }
+  }, {
+    key: 'handNew',
+    value: function handNew() {
+      var refresh = this.props.refresh;
+      alertNew(refresh);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { id: 'new_part', className: 'position_absolute animation_one' },
+        React.createElement(
+          'div',
+          { className: 'text_align_right' },
+          React.createElement('i', { className: 'fa fa-times fa-fw', onClick: this.handClick })
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6E20\u9053\u540D\u79F0:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_name' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6E20\u9053\u7F16\u53F7:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_code' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6E20\u9053\u90E8\u95E8id:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_department_id' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_button_wrap', onClick: this.handNew },
+          '\u65B0 \u5EFA'
+        )
+      );
+    }
+  }]);
+
+  return AlertNew;
+}(React.Component);
+
+;
+
 // 右边 头部
 
-var AdminRightTop = function (_React$Component3) {
-  _inherits(AdminRightTop, _React$Component3);
+var AdminRightTop = function (_React$Component5) {
+  _inherits(AdminRightTop, _React$Component5);
 
   function AdminRightTop() {
     _classCallCheck(this, AdminRightTop);
@@ -23198,6 +23464,58 @@ var AdminRightTop = function (_React$Component3) {
 }(React.Component);
 
 ;
+
+//判断特殊列
+var checkTd = function checkTd(defaultTd) {
+  var props = this.props;
+  id = props.item.id;
+
+  var handEdit = function handEdit(id) {
+    alertSearch(id);
+  };
+  var delect = function delect(e) {
+    $.ajax({
+      url: "/delete_channel",
+      dataType: 'json',
+      type: 'POST',
+      data: { "id": id },
+      success: function (data) {
+        if (data.success) {
+          props.refresh();
+          alert("删除成功！");
+        } else {
+          alert("删除失败！");
+        }
+      }.bind(this),
+      error: function (xhr, status, err) {}.bind(this)
+    });
+  };
+
+  if (this.props.thitem.type == "operation") {
+    return React.createElement(
+      'td',
+      null,
+      React.createElement(
+        'span',
+        { className: '', onClick: handEdit.bind(this, id) },
+        React.createElement('i', { className: 'fa fa-pencil btn_style btn_style_edit' })
+      ),
+      React.createElement(
+        'span',
+        { className: '', onClick: delect },
+        React.createElement('i', { className: 'fa fa-trash-o btn_style btn_style_delect' })
+      )
+    );
+  } else if (this.props.thitem.type == "check") {
+    return React.createElement(
+      'td',
+      null,
+      React.createElement('input', { type: 'checkbox', name: 'checkbox' })
+    );
+  } else {
+    return defaultTd;
+  }
+};
 
 // 返回到页面
 ReactDOM.render(React.createElement(AdminIndex, null), document.getElementById("admin"));

@@ -8,12 +8,46 @@ a{
 body,html{
   height: 100%;
 }
+#admin{
+  height: 100%;
+}
 thead{
   background: #E6F8BA;
 }
-.table>thead>tr>th{
+.position_relative{
+  position: relative;
+}
+.position_absolute{
+  position: absolute;
+}
+
+.table{
+  padding: 0 17px;
+}
+.table>thead>tr>th:first-child{
+  padding-left: 7px;
+}
+.table>thead>tr>th:last-child{
   border: none;
-  text-align: center;
+  text-align: right;
+  padding-right: 17px;
+}
+
+.table>tbody>tr>td:last-child{
+  border: none;
+  text-align: right;
+
+}
+.table>tbody>tr>td:first-child{
+  padding-left: 7px;
+}
+.btn_style{
+  color: #B2A5C2;
+  padding: 0 7px;
+  cursor: pointer;
+}
+.btn_style:hover{
+  color: #3B8CFF;
 }
 .page_wrap{
   padding: 0 15px;
@@ -112,4 +146,104 @@ thead{
 .borrow_bookimg{
   width: 100%;
   height: 120px;
+}
+
+
+#background{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+}
+/*编辑*/
+#edit_part,#new_part{
+  background: #fff;
+  z-index: 9999;
+  position: absolute;
+  top: 150px;
+  left: 32.79%;
+  padding:7px 17px 17px 17px;
+  display: none;
+}
+.edit_part_div_name{
+  font-size: 12px;
+  margin-right: 17px;
+  display: inline-block;
+  width: 75px;
+}
+@media screen and (min-width:768px){
+  #edit_part{
+  }
+}
+.text_align_right{
+  text-align: right;
+}
+.edit_part_div_input{
+  border: none;
+  outline-style: none;
+  width: 210px;
+  border-radius: 3px;
+  text-indent: 17px;
+}
+.edit_part_div_input_wrap{
+  border: 1px solid #999;
+  border-radius: 3px;
+  display: inline-block;
+  padding: 4px 0;
+
+}
+.edit_part_titlie{
+  height: 37px;
+  line-height: 37px;
+  text-align: center;
+  background: #009695;
+  color: #fff;
+}
+.edit_part_div{
+  padding: 17px 0;
+}
+.edit_button_wrap{
+  height: 37px;
+  line-height: 37px;
+  text-align: center;
+  background: #009695;
+  color: #fff;
+}
+
+.animation_one{
+-webkit-animation:bounceInDown 1s .2s ease both;
+-moz-animation:bounceInDown 1s .2s ease both;}
+@-webkit-keyframes bounceInDown{
+0%{opacity:0;
+-webkit-transform:translateY(-2000px)}
+60%{opacity:1;
+-webkit-transform:translateY(30px)}
+80%{-webkit-transform:translateY(-10px)}
+100%{-webkit-transform:translateY(0)}
+}
+@-moz-keyframes bounceInDown{
+0%{opacity:0;
+-moz-transform:translateY(-2000px)}
+60%{opacity:1;
+-moz-transform:translateY(30px)}
+80%{-moz-transform:translateY(-10px)}
+100%{-moz-transform:translateY(0)}
+}
+
+.animation_two{
+-webkit-animation:rotateOut 1s .2s ease both;
+-moz-animation:rotateOut 1s .2s ease both;}
+@-webkit-keyframes rotateOut{
+0%{-webkit-transform:rotate(0);
+opacity:1}
+100%{-webkit-transform:rotate(-90deg);
+opacity:0}
+}
+@-moz-keyframes rotateOut{
+0%{-moz-transform:rotate(0);
+opacity:1}
+100%{-moz-transform:rotate(-90deg);
+opacity:0}
 }

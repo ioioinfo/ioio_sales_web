@@ -16,9 +16,8 @@
 module.exports = {
     entry: {
         index: './app/index.jsx',
-        borrow_books: './app/borrow_books.jsx',
-        return_list: './app/return_list.jsx',
-        borrow_view: './app/borrow_view.jsx',
+        departments_list: './app/departments_list.jsx',
+        channels: './app/channels.jsx',
     },
     output: {
         path: __dirname,

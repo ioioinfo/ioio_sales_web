@@ -37,21 +37,21 @@ exports.register = function(server, options, next) {
             },
         },
 
-        //借书记录
+        //渠道部门
         {
             method: 'GET',
-            path: '/borrow_books',
+            path: '/departments_list',
             handler: function(request, reply) {
-                return reply.view("borrow_books");
+                return reply.view("departments_list");
             },
         },
 
-        //还书记录
+        //渠道部门信息
         {
             method: 'GET',
-            path: '/return_list',
+            path: '/channels',
             handler: function(request, reply) {
-                return reply.view("return_list");
+                return reply.view("channels");
             },
         },
 
