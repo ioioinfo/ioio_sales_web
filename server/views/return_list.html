@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
     <title>还书记录</title>
     <link rel="stylesheet" href="css/weui.css">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/admin_index_public.css">
@@ -14,8 +15,8 @@
 <body>
     <div id="admin"></div>
     <script type="text/javascript">
-    var default_selected = "02";
-    var breadcrumbs = ["商品","商品列表"];
+    var platform_name = "{{platform_name}}";
+    var company_name = "{{company_name}}";
 
     //表头
     var tt = [{name:'id',title:'编号',sort:true}
@@ -41,6 +42,8 @@
               if (data.rows) {
                 allNum = data.num;
                 cb({tabthitems:tt,tabtritems:data.rows,allNum:allNum,everyNum:params.everyNum});
+              }else {
+                cb({tabthitems:tt,tabtritems:dd,allNum:allNum,everyNum:params.everyNum});
               }
             }else {
                 alert(data.message);
@@ -51,8 +54,9 @@
 
     <script type="text/javascript">
     </script>
-    <script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="js/app/return_list.js"></script>
 
 </body>

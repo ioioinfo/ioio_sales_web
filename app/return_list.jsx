@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-
+var AdminLeft = require('nav');
 var Table = require('Table');
 var PageTab = require('PageTab');
 
@@ -15,69 +15,6 @@ class AdminIndex extends React.Component {
     );
   }
 };
-
-// 左边 导航
-class AdminLeft extends React.Component {
-  render() {
-    return (
-      <div className="admin_left col-xs-6 col-sm-4 col-md-2">
-        <div className="admin_logo">
-          <span className="admin_index_logo">IOIO后台</span><br/>
-          <span className="admin_index_name">佑佑信息科技</span>
-        </div>
-        <AdminLeftNav/>
-      </div>
-    );
-  }
-};
-
-
-// 左边 导航
-class AdminLeftNav extends React.Component {
-  constructor(props) {
-      super(props);
-      this.state={navitem:[]};
-      this.handleClick=this.handleClick.bind(this);
-  }
-  handleClick(e){
-    var index= $(e.target).data("role");
-    var second_nav = "nav_second"+index;
-    $("#"+second_nav).slideToggle(400);
-  }
-  componentDidMount() {
-    var navitem = [{icon:"fa fa-home fa-fw",navname:"首页",snav:[{icon:"fa fa-home fa-fw",navname:"首页"},{icon:"fa fa-home fa-fw",navname:"首页"},{icon:"fa fa-home fa-fw",navname:"首页"}]},
-              {icon:"fa fa-minus-square-o fa-fw",navname:"功能菜单一",snav:[{icon:"fa fa-home fa-fw",navname:"首页"},{icon:"fa fa-home fa-fw",navname:"首页"},{icon:"fa fa-home fa-fw",navname:"首页"}]},
-              {icon:"fa fa-tags fa-fw",navname:"功能菜单一",snav:[{icon:"fa fa-home fa-fw",navname:"首页"}]},
-              {icon:"fa fa-television fa-fw",navname:"功能菜单一",snav:[{icon:"fa fa-home fa-fw",navname:"首页"}]},
-              {icon:"fa fa-users fa-fw",navname:"功能菜单一",snav:[{icon:"fa fa-home fa-fw",navname:"首页"}]},
-              {icon:"fa fa-window-close-o fa-fw",navname:"功能菜单一",snav:[{icon:"fa fa-home fa-fw",navname:"首页"}]},
-              {icon:"fa fa-automobile fa-fw",navname:"功能菜单一",snav:[{icon:"fa fa-home fa-fw",navname:"首页"}]},
-              {icon:"fa fa-train fa-fw",navname:"功能菜单一",snav:[{icon:"fa fa-home fa-fw",navname:"首页"}]}]
-              this.setState({navitem:navitem});
-  }
-  render() {
-    return (
-      <div className="admin_index_nav">
-        {this.state.navitem.map((item,index) => (
-            <div className="nav_public  font_color" key={index} href="#" >
-                <div className="nav_public_first" data-role={index} onClick={this.handleClick}>
-                  <i className={item.icon}></i>&nbsp; {item.navname}
-                </div>
-                <p className="nav_second" id={"nav_second"+index}>
-                  {item.snav.map((item,index) => (
-                    <a key={index} className="nav_public_in nav_public_second font_color" href="#">
-                      <i className={item.icon}></i>&nbsp; {item.navname}
-                    </a>))
-                  }
-                </p>
-
-            </div>))
-        }
-      </div>
-    );
-  }
-};
-
 // 右边
 class AdminRight extends React.Component {
   constructor(props) {
