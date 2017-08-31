@@ -55,15 +55,41 @@ exports.register = function(server, options, next) {
             },
         },
 
-        //借书详情
+        //渠道预算
         {
             method: 'GET',
-            path: '/borrow_view',
+            path: '/budgets',
             handler: function(request, reply) {
-                return reply.view("borrow_view");
+                return reply.view("budgets");
             },
         },
 
+        //地摊点信息
+        {
+            method: 'GET',
+            path: '/points',
+            handler: function(request, reply) {
+                return reply.view("points");
+            },
+        },
+
+        //到点签到历史信息
+        {
+            method: 'GET',
+            path: '/histories',
+            handler: function(request, reply) {
+                return reply.view("histories");
+            },
+        },
+
+        //呼叫中心列表
+        {
+            method: 'GET',
+            path: '/call_centers',
+            handler: function(request, reply) {
+                return reply.view("call_centers");
+            },
+        },
 
     ]);
 

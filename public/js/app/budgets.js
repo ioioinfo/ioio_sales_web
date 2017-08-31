@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 189);
+/******/ 	return __webpack_require__(__webpack_require__.s = 186);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23032,10 +23032,7 @@ module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23055,25 +23052,39 @@ var ReactDOM = __webpack_require__(85);
 var AdminLeft = __webpack_require__(84);
 var Table = __webpack_require__(83);
 var PageTab = __webpack_require__(82);;
-
+// 查看
 function alertSearch(id) {
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_department_byId", { id: id }, function (data) {
+  $.get("/search_budget_byId", { id: id }, function (data) {
+    var id = data.rows[0].id;
     var name = data.rows[0].name;
-    var code = data.rows[0].code;
-    var source_level = data.rows[0].source_level;
+    var channel_id = data.rows[0].channel_id;
+    var employees_cost = data.rows[0].employees_cost;
+    var locations_cost = data.rows[0].locations_cost;
+    var materials_cost = data.rows[0].materials_cost;
+    var medias_cost = data.rows[0].medias_cost;
+    $('#id').val(id);
     $('#name').val(name);
-    $('#code').val(code);
-    $('#source_level').val(source_level);
+    $('#channel_id').val(channel_id);
+    $('#employees_cost').val(employees_cost);
+    $('#locations_cost').val(locations_cost);
+    $('#materials_cost').val(materials_cost);
+    $('#medias_cost').val(medias_cost);
   });
 }
-
+// 编辑
 function alertEdit(refresh) {
+  var id = $('#id').val();
   var name = $('#name').val();
-  var code = $('#code').val();
-  var source_level = $('#source_level').val();
-  $.post("/update_department", { id: id, name: name, code: code, source_level: source_level }, function (data) {
+  var channel_id = $('#channel_id').val();
+  var employees_cost = $('#employees_cost').val();
+  var locations_cost = $('#locations_cost').val();
+  var materials_cost = $('#materials_cost').val();
+  var medias_cost = $('#medias_cost').val();
+  var budget = { id: id, name: name, channel_id: channel_id, employees_cost: employees_cost,
+    locations_cost: locations_cost, materials_cost: materials_cost, medias_cost: medias_cost };
+  $.post("/update_budget", { budget: JSON.stringify(budget) }, function (data) {
     if (data.success) {
       alert('修改成功');
       $('#edit_part').hide();
@@ -23083,11 +23094,17 @@ function alertEdit(refresh) {
   });
 }
 
+// 新建
 function alertNew(refresh) {
   var name = $('#new_name').val();
-  var code = $('#new_code').val();
-  var source_level = $('#new_source_level').val();
-  $.post("/save_department", { name: name, code: code, source_level: source_level }, function (data) {
+  var channel_id = $('#new_channel_id').val();
+  var employees_cost = $('#new_employees_cost').val();
+  var locations_cost = $('#new_locations_cost').val();
+  var materials_cost = $('#new_materials_cost').val();
+  var medias_cost = $('#new_medias_cost').val();
+  var budget = { name: name, channel_id: channel_id, employees_cost: employees_cost,
+    locations_cost: locations_cost, materials_cost: materials_cost, medias_cost: medias_cost };
+  $.post("/save_budget", { budget: JSON.stringify(budget) }, function (data) {
     if (data.success) {
       alert('新建成功');
       $('#new_part').hide();
@@ -23270,7 +23287,21 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u90E8\u95E8\u540D\u79F0:'
+            'id:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'id' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u9884\u7B97\u540D\u79F0:'
           ),
           React.createElement(
             'span',
@@ -23284,12 +23315,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u90E8\u95E8\u7F16\u53F7:'
+            '\u6E20\u9053id:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'code' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'channel_id' })
           )
         ),
         React.createElement(
@@ -23298,12 +23329,54 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u8D44\u6E90\u7B49\u7EA7:'
+            '\u4EBA\u5DE5\u6210\u672C:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'source_level' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'employees_cost' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u573A\u5730\u6210\u672C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'locations_cost' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u7269\u6599\u6210\u672C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'materials_cost' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5A92\u4F53\u6210\u672C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'medias_cost' })
           )
         ),
         React.createElement(
@@ -23362,7 +23435,7 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u90E8\u95E8\u540D\u79F0:'
+            '\u9884\u7B97\u540D\u79F0:'
           ),
           React.createElement(
             'span',
@@ -23376,12 +23449,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u90E8\u95E8\u7F16\u53F7:'
+            '\u6E20\u9053id:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_code' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_channel_id' })
           )
         ),
         React.createElement(
@@ -23390,12 +23463,54 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u8D44\u6E90\u7B49\u7EA7:'
+            '\u4EBA\u5DE5\u6210\u672C:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_source_level' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_employees_cost' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u573A\u5730\u6210\u672C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_locations_cost' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u7269\u6599\u6210\u672C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_materials_cost' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5A92\u4F53\u6210\u672C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_medias_cost' })
           )
         ),
         React.createElement(
@@ -23460,7 +23575,7 @@ var checkTd = function checkTd(defaultTd) {
   };
   var delect = function delect(e) {
     $.ajax({
-      url: "/delete_department",
+      url: "/delete_budget",
       dataType: 'json',
       type: 'POST',
       data: { "id": id },

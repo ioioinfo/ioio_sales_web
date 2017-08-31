@@ -18,6 +18,10 @@ module.exports = {
         index: './app/index.jsx',
         departments_list: './app/departments_list.jsx',
         channels: './app/channels.jsx',
+        budgets: './app/budgets.jsx',
+        points: './app/points.jsx',
+        histories: './app/histories.jsx',
+        call_centers: './app/call_centers.jsx',
     },
     output: {
         path: __dirname,

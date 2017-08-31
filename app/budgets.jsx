@@ -9,24 +9,35 @@ var PageTab = require('PageTab');;
 function alertSearch(id){
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_channel_byId",{id:id},function(data){
+  $.get("/search_budget_byId",{id:id},function(data){
     var id = data.rows[0].id;
     var name = data.rows[0].name;
-    var code = data.rows[0].code;
-    var source_level = data.rows[0].department_id;
+    var channel_id = data.rows[0].channel_id;
+    var employees_cost = data.rows[0].employees_cost;
+    var locations_cost = data.rows[0].locations_cost;
+    var materials_cost = data.rows[0].materials_cost;
+    var medias_cost = data.rows[0].medias_cost;
     $('#id').val(id);
     $('#name').val(name);
-    $('#code').val(code);
-    $('#department_id').val(source_level);
+    $('#channel_id').val(channel_id);
+    $('#employees_cost').val(employees_cost);
+    $('#locations_cost').val(locations_cost);
+    $('#materials_cost').val(materials_cost);
+    $('#medias_cost').val(medias_cost);
   })
 }
 // 编辑
 function alertEdit(refresh){
   var id = $('#id').val();
   var name = $('#name').val();
-  var code = $('#code').val();
-  var department_id = $('#department_id').val();
-  $.post("/update_channel",{id:id, name:name, code:code, department_id:department_id},function(data){
+  var channel_id = $('#channel_id').val();
+  var employees_cost = $('#employees_cost').val();
+  var locations_cost = $('#locations_cost').val();
+  var materials_cost = $('#materials_cost').val();
+  var medias_cost = $('#medias_cost').val();
+  var budget = {id:id, name:name, channel_id:channel_id, employees_cost:employees_cost,
+                locations_cost:locations_cost, materials_cost:materials_cost, medias_cost:medias_cost, }
+  $.post("/update_budget",{budget:JSON.stringify(budget)},function(data){
     if(data.success){
       alert('修改成功');
       $('#edit_part').hide();
@@ -40,9 +51,14 @@ function alertEdit(refresh){
 // 新建
 function alertNew(refresh){
   var name = $('#new_name').val();
-  var code = $('#new_code').val();
-  var department_id = $('#new_department_id').val();
-  $.post("/save_channel",{name:name, code:code, department_id:department_id},function(data){
+  var channel_id = $('#new_channel_id').val();
+  var employees_cost = $('#new_employees_cost').val();
+  var locations_cost = $('#new_locations_cost').val();
+  var materials_cost = $('#new_materials_cost').val();
+  var medias_cost = $('#new_medias_cost').val();
+  var budget = {name:name, channel_id:channel_id, employees_cost:employees_cost,
+                locations_cost:locations_cost, materials_cost:materials_cost, medias_cost:medias_cost, }
+  $.post("/save_budget",{budget:JSON.stringify(budget)},function(data){
     if(data.success){
       alert('新建成功');
       $('#new_part').hide();
@@ -148,16 +164,28 @@ class AlertEdit extends React.Component {
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="id"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道名称:</span>
+          <span className="edit_part_div_name">预算名称:</span>
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="name"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道编号:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="code"/></span>
+          <span className="edit_part_div_name">渠道id:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="channel_id"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道部门id:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="department_id"/></span>
+          <span className="edit_part_div_name">人工成本:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="employees_cost"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">场地成本:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="locations_cost"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">物料成本:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="materials_cost"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">媒体成本:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="medias_cost"/></span>
         </div>
         <div className="edit_button_wrap" onClick={this.handSave}>修 改</div>
       </div>
@@ -185,16 +213,28 @@ class AlertNew extends React.Component {
         <div className="text_align_right"><i className="fa fa-times fa-fw" onClick={this.handClick}></i></div>
 
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道名称:</span>
+          <span className="edit_part_div_name">预算名称:</span>
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_name"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道编号:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_code"/></span>
+          <span className="edit_part_div_name">渠道id:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_channel_id"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道部门id:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_department_id"/></span>
+          <span className="edit_part_div_name">人工成本:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_employees_cost"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">场地成本:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_locations_cost"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">物料成本:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_materials_cost"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">媒体成本:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_medias_cost"/></span>
         </div>
         <div className="edit_button_wrap" onClick={this.handNew}>新 建</div>
       </div>
@@ -224,7 +264,7 @@ class AdminRightTop extends React.Component {
         }
         var delect = function(e){
           $.ajax({
-              url: "/delete_channel",
+              url: "/delete_budget",
               dataType: 'json',
               type: 'POST',
               data: {"id":id},

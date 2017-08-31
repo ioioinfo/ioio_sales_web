@@ -9,15 +9,21 @@ var PageTab = require('PageTab');;
 function alertSearch(id){
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_channel_byId",{id:id},function(data){
+  $.get("/search_point_byId",{id:id},function(data){
     var id = data.rows[0].id;
     var name = data.rows[0].name;
     var code = data.rows[0].code;
-    var source_level = data.rows[0].department_id;
+    var address = data.rows[0].address;
+    var province = data.rows[0].province;
+    var city = data.rows[0].city;
+    var district = data.rows[0].district;
     $('#id').val(id);
     $('#name').val(name);
     $('#code').val(code);
-    $('#department_id').val(source_level);
+    $('#address').val(address);
+    $('#province').val(province);
+    $('#city').val(city);
+    $('#district').val(district);
   })
 }
 // 编辑
@@ -25,8 +31,13 @@ function alertEdit(refresh){
   var id = $('#id').val();
   var name = $('#name').val();
   var code = $('#code').val();
-  var department_id = $('#department_id').val();
-  $.post("/update_channel",{id:id, name:name, code:code, department_id:department_id},function(data){
+  var address = $('#address').val();
+  var province = $('#province').val();
+  var city = $('#city').val();
+  var district = $('#district').val();
+  var point = {id:id, name:name, code:code, address:address,
+                province:province, city:city, district:district, }
+  $.post("/update_point",{point:JSON.stringify(point)},function(data){
     if(data.success){
       alert('修改成功');
       $('#edit_part').hide();
@@ -39,10 +50,15 @@ function alertEdit(refresh){
 
 // 新建
 function alertNew(refresh){
-  var name = $('#new_name').val();
-  var code = $('#new_code').val();
-  var department_id = $('#new_department_id').val();
-  $.post("/save_channel",{name:name, code:code, department_id:department_id},function(data){
+var name = $('#new_name').val();
+var code = $('#new_code').val();
+var address = $('#new_address').val();
+var province = $('#new_province').val();
+var city = $('#new_city').val();
+var district = $('#new_district').val();
+var point = {name:name, code:code, address:address,
+              province:province, city:city, district:district, }
+  $.post("/save_point",{point:JSON.stringify(point)},function(data){
     if(data.success){
       alert('新建成功');
       $('#new_part').hide();
@@ -148,16 +164,28 @@ class AlertEdit extends React.Component {
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="id"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道名称:</span>
+          <span className="edit_part_div_name">摊点名称:</span>
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="name"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道编号:</span>
+          <span className="edit_part_div_name">编号:</span>
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="code"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道部门id:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="department_id"/></span>
+          <span className="edit_part_div_name">省:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="district"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">市:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="city"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">区:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="province"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">详细地址:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="address"/></span>
         </div>
         <div className="edit_button_wrap" onClick={this.handSave}>修 改</div>
       </div>
@@ -185,16 +213,28 @@ class AlertNew extends React.Component {
         <div className="text_align_right"><i className="fa fa-times fa-fw" onClick={this.handClick}></i></div>
 
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道名称:</span>
+          <span className="edit_part_div_name">摊点名称:</span>
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_name"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道编号:</span>
+          <span className="edit_part_div_name">编号:</span>
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_code"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道部门id:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_department_id"/></span>
+          <span className="edit_part_div_name">省:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_district"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">市:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_city"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">区:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_province"/></span>
+        </div>
+        <div className="edit_part_div">
+          <span className="edit_part_div_name">详细地址:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_address"/></span>
         </div>
         <div className="edit_button_wrap" onClick={this.handNew}>新 建</div>
       </div>
@@ -224,7 +264,7 @@ class AdminRightTop extends React.Component {
         }
         var delect = function(e){
           $.ajax({
-              url: "/delete_channel",
+              url: "/delete_point",
               dataType: 'json',
               type: 'POST',
               data: {"id":id},

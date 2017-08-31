@@ -9,24 +9,24 @@ var PageTab = require('PageTab');;
 function alertSearch(id){
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_channel_byId",{id:id},function(data){
+  $.get("/search_center_byId",{id:id},function(data){
     var id = data.rows[0].id;
-    var name = data.rows[0].name;
-    var code = data.rows[0].code;
-    var source_level = data.rows[0].department_id;
+    var school_id = data.rows[0].school_id;
+    var telephone = data.rows[0].telephone;
+    var responsible_person = data.rows[0].responsible_person;
     $('#id').val(id);
-    $('#name').val(name);
-    $('#code').val(code);
-    $('#department_id').val(source_level);
+    $('#school_id').val(school_id);
+    $('#telephone').val(telephone);
+    $('#responsible_person').val(responsible_person);
   })
 }
 // 编辑
 function alertEdit(refresh){
   var id = $('#id').val();
-  var name = $('#name').val();
-  var code = $('#code').val();
-  var department_id = $('#department_id').val();
-  $.post("/update_channel",{id:id, name:name, code:code, department_id:department_id},function(data){
+  var school_id = $('#school_id').val();
+  var telephone = $('#telephone').val();
+  var responsible_person = $('#responsible_person').val();
+  $.post("/update_center",{id:id, school_id:school_id, telephone:telephone, responsible_person:responsible_person},function(data){
     if(data.success){
       alert('修改成功');
       $('#edit_part').hide();
@@ -39,10 +39,10 @@ function alertEdit(refresh){
 
 // 新建
 function alertNew(refresh){
-  var name = $('#new_name').val();
-  var code = $('#new_code').val();
-  var department_id = $('#new_department_id').val();
-  $.post("/save_channel",{name:name, code:code, department_id:department_id},function(data){
+  var school_id = $('#new_school_id').val();
+  var telephone = $('#new_telephone').val();
+  var responsible_person = $('#new_responsible_person').val();
+  $.post("/save_center",{school_id:school_id, telephone:telephone, responsible_person:responsible_person},function(data){
     if(data.success){
       alert('新建成功');
       $('#new_part').hide();
@@ -104,9 +104,6 @@ class AdminRight extends React.Component {
   handNew(e){
     $('#background').show();
     $('#new_part').show();
-    var name = $('#new_name').val('');
-    var code = $('#new_code').val('');
-    var source_level = $('#new_source_level').val('');
   }
   render() {
     return (
@@ -148,17 +145,18 @@ class AlertEdit extends React.Component {
           <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="id"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道名称:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="name"/></span>
+          <span className="edit_part_div_name">学校id:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="school_id"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道编号:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="code"/></span>
+          <span className="edit_part_div_name">手机:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="telephone"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道部门id:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="department_id"/></span>
+          <span className="edit_part_div_name">负责人:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="responsible_person"/></span>
         </div>
+
         <div className="edit_button_wrap" onClick={this.handSave}>修 改</div>
       </div>
     );
@@ -185,16 +183,16 @@ class AlertNew extends React.Component {
         <div className="text_align_right"><i className="fa fa-times fa-fw" onClick={this.handClick}></i></div>
 
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道名称:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_name"/></span>
+          <span className="edit_part_div_name">学校id:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_school_id"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道编号:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_code"/></span>
+          <span className="edit_part_div_name">手机:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_telephone"/></span>
         </div>
         <div className="edit_part_div">
-          <span className="edit_part_div_name">渠道部门id:</span>
-          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_department_id"/></span>
+          <span className="edit_part_div_name">负责人:</span>
+          <span className="edit_part_div_input_wrap"><input type="text" className="edit_part_div_input" id="new_responsible_person"/></span>
         </div>
         <div className="edit_button_wrap" onClick={this.handNew}>新 建</div>
       </div>
@@ -224,7 +222,7 @@ class AdminRightTop extends React.Component {
         }
         var delect = function(e){
           $.ajax({
-              url: "/delete_channel",
+              url: "/delete_center",
               dataType: 'json',
               type: 'POST',
               data: {"id":id},

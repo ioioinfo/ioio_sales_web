@@ -166,6 +166,8 @@ thead{
   left: 32.79%;
   padding:7px 17px 17px 17px;
   display: none;
+  max-height: 460px;
+  overflow: auto;
 }
 .edit_part_div_name{
   font-size: 12px;
