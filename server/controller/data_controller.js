@@ -1543,7 +1543,275 @@ exports.register = function(server, options, next) {
                 });
             }
         },
+        //新增预约信息
+        {
+            method: 'POST',
+            path: '/save_appointment',
+            handler: function(request, reply) {
+                var appointment = request.payload.appointment;
+                appointment = JSON.parse(appointment);
+                if (!appointment.customer_id || !appointment.name || !appointment.phone || !appointment.sex || !appointment.relationship || !appointment.order_date|| !appointment.order_person || !appointment.order_school) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "appointment":JSON.stringify(appointment)
+                };
 
+                api.save_appointment(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //更新需求预约信息
+        {
+            method: "POST",
+            path: '/update_appointment',
+            handler: function(request, reply) {
+                var appointment = request.payload.appointment;
+                appointment = JSON.parse(appointment);
+                if (!appointment.customer_id || !appointment.name || !appointment.phone || !appointment.sex || !appointment.relationship || !appointment.order_date|| !appointment.order_person || !appointment.order_school|| !appointment.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "appointment":JSON.stringify(appointment)
+                };
+                api.update_appointment(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //预约信息删除
+        {
+            method: "POST",
+            path: '/delete_appointment',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_appointment(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有到访信息
+        {
+            method: 'GET',
+            path: '/get_visit_records',
+            handler: function(request, reply) {
+                api.get_visit_records(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增到访信息
+        {
+            method: 'POST',
+            path: '/save_visit',
+            handler: function(request, reply) {
+                var visit = request.payload.visit;
+                visit = JSON.parse(visit);
+                if (!visit.customer_id || !visit.name || !visit.phone || !visit.sex || !visit.relationship
+                 || !visit.visit_date || !visit.reception_person || !visit.school) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "visit":JSON.stringify(visit)
+                };
+
+                api.save_visit(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //更新到访信息
+        {
+            method: "POST",
+            path: '/update_visit',
+            handler: function(request, reply) {
+                var visit = request.payload.visit;
+                visit = JSON.parse(visit);
+                if (!visit.customer_id || !visit.name || !visit.phone || !visit.sex || !visit.relationship
+                 || !visit.visit_date || !visit.reception_person || !visit.school || !visit.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "visit":JSON.stringify(visit)
+                };
+                api.update_visit(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找到访信息
+        {
+            method: "GET",
+            path: '/search_visit_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_visit_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //到访信息删除
+        {
+            method: "POST",
+            path: '/delete_visit',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_visit(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有到合同
+        {
+            method: 'GET',
+            path: '/get_contracts',
+            handler: function(request, reply) {
+                api.get_contracts(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增合同
+        {
+            method: 'POST',
+            path: '/save_contract',
+            handler: function(request, reply) {
+                var contract = request.payload.contract;
+                contract = JSON.parse(contract);
+                if (!contract.customer_id || !contract.amount || !contract.quantity || !contract.discount
+                 || !contract.actual_price || !contract.person_id || !contract.school_id || !contract.state) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "contract":JSON.stringify(contract)
+                };
+
+                api.save_contract(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //更新合同
+        {
+            method: "POST",
+            path: '/update_contract',
+            handler: function(request, reply) {
+                var contract = request.payload.contract;
+                contract = JSON.parse(contract);
+                if (!contract.customer_id || !contract.amount || !contract.quantity || !contract.discount|| !contract.id
+                 || !contract.actual_price || !contract.person_id || !contract.school_id || !contract.state) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "contract":JSON.stringify(contract)
+                };
+                api.update_contract(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //合同删除
+        {
+            method: "POST",
+            path: '/delete_contract',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_contract(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找到访信息
+        {
+            method: "GET",
+            path: '/search_contract_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_contract_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
 
 
 

@@ -22,6 +22,155 @@ var host = "http://211.149.248.241:18028/";
 
 var nav = function(server) {
     return {
+        //根据id查找合同
+        search_contract_by_id: function(id,cb) {
+            var url = host + "search_contract_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除合同
+        delete_contract: function(data,cb) {
+            var url = host + "delete_contract";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新合同
+        update_contract: function(data,cb) {
+            var url = host + "update_contract";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存合同
+        save_contract: function(data,cb) {
+            var url = host + "save_contract";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有合同
+        get_contracts: function(cb) {
+            var url = host + "get_contracts";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除到访
+        delete_visit: function(data,cb) {
+            var url = host + "delete_visit";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找到访
+        search_visit_by_id: function(id,cb) {
+            var url = host + "search_visit_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新到访
+        update_visit: function(data,cb) {
+            var url = host + "update_visit";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存到访
+        save_visit: function(data,cb) {
+            var url = host + "save_visit";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有预约信息
+        get_visit_records: function(cb) {
+            var url = host + "get_visit_records";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除预约
+        delete_appointment: function(data,cb) {
+            var url = host + "delete_appointment";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新预约
+        update_appointment: function(data,cb) {
+            var url = host + "update_appointment";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存预约
+        save_appointment: function(data,cb) {
+            var url = host + "save_appointment";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
         //根据id查找预约
         search_appointment_by_id: function(id,cb) {
             var url = host + "search_appointment_by_id?id=" + id;
