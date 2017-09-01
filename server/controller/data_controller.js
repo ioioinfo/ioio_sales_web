@@ -2085,6 +2085,237 @@ exports.register = function(server, options, next) {
                 });
             }
         },
+        //查询所有线索联系记录
+        {
+            method: 'GET',
+            path: '/get_threads_customers',
+            handler: function(request, reply) {
+                api.get_threads_customers(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增线索电话联系记录
+        {
+            method: 'POST',
+            path: '/save_threads_by_phone',
+            handler: function(request, reply) {
+                var connection = request.payload.connection;
+                connection = JSON.parse(connection);
+                if (!connection.thread_id || !connection.phone || !connection.state || !connection.way
+                 || !connection.call_in_time || !connection.call_time) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "connection":JSON.stringify(connection)
+                };
+
+                api.save_threads_by_phone(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增线索邮件联系记录
+        {
+            method: 'POST',
+            path: '/save_threads_by_email',
+            handler: function(request, reply) {
+                var connection = request.payload.connection;
+                connection = JSON.parse(connection);
+                if (!connection.thread_id || !connection.email || !connection.state || !connection.way
+                 || !connection.message) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "connection":JSON.stringify(connection)
+                };
+
+                api.save_threads_by_email(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增线索短信联系记录
+        {
+            method: 'POST',
+            path: '/save_threads_by_message',
+            handler: function(request, reply) {
+                var connection = request.payload.connection;
+                connection = JSON.parse(connection);
+                if (!connection.thread_id || !connection.phone || !connection.state || !connection.way
+                 || !connection.message) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "connection":JSON.stringify(connection)
+                };
+
+                api.save_threads_by_message(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //根据id查找线索联系记录
+        {
+            method: "GET",
+            path: '/search_threads_record',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_threads_record(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //删除联系记录
+        {
+            method: "POST",
+            path: '/delete_connection_record',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_connection_record(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有商机联系记录
+        {
+            method: 'GET',
+            path: '/get_intentions_customers',
+            handler: function(request, reply) {
+                api.get_intentions_customers(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增商机电话联系记录
+        {
+            method: 'POST',
+            path: '/save_intention_by_phone',
+            handler: function(request, reply) {
+                var connection = request.payload.connection;
+                connection = JSON.parse(connection);
+                if (!connection.customer_id || !connection.phone || !connection.state || !connection.way
+                 || !connection.call_in_time || !connection.call_time) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "connection":JSON.stringify(connection)
+                };
+
+                api.save_intention_by_phone(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增商机邮件联系记录
+        {
+            method: 'POST',
+            path: '/save_intention_by_email',
+            handler: function(request, reply) {
+                var connection = request.payload.connection;
+                connection = JSON.parse(connection);
+                if (!connection.customer_id || !connection.email || !connection.state || !connection.way
+                 || !connection.message) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "connection":JSON.stringify(connection)
+                };
+
+                api.save_intention_by_email(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增商机短信联系记录
+        {
+            method: 'POST',
+            path: '/save_intention_by_message',
+            handler: function(request, reply) {
+                var connection = request.payload.connection;
+                connection = JSON.parse(connection);
+                if (!connection.customer_id || !connection.phone || !connection.state || !connection.way
+                 || !connection.message) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "connection":JSON.stringify(connection)
+                };
+
+                api.save_intention_by_message(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //根据id查找商机联系记录
+        {
+            method: "GET",
+            path: '/search_intentions_record',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_intentions_record(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+
+
 
 
     ]);

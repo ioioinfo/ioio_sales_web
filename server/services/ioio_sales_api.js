@@ -22,6 +22,134 @@ var host = "http://211.149.248.241:18028/";
 
 var nav = function(server) {
     return {
+        //根据id查找商机联系方式
+        search_intentions_record: function(id,cb) {
+            var url = host + "search_intentions_record?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //新增商机短信联系方式
+        save_intention_by_message: function(data,cb) {
+            var url = host + "save_intention_by_message";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //新增商机邮件联系方式
+        save_intention_by_email: function(data,cb) {
+            var url = host + "save_intention_by_email";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //新增商机电话联系方式
+        save_intention_by_phone: function(data,cb) {
+            var url = host + "save_intention_by_phone";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有商机联系记录
+        get_intentions_customers: function(cb) {
+            var url = host + "get_intentions_customers";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除联系记录
+        delete_connection_record: function(data,cb) {
+            var url = host + "delete_connection_record";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找线索联系方式
+        search_threads_record: function(id,cb) {
+            var url = host + "search_threads_record?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //新增线索短信联系方式
+        save_threads_by_message: function(data,cb) {
+            var url = host + "save_threads_by_message";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //新增线索邮件联系方式
+        save_threads_by_email: function(data,cb) {
+            var url = host + "save_threads_by_email";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //新增线索电话联系方式
+        save_threads_by_phone: function(data,cb) {
+            var url = host + "save_threads_by_phone";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有线索联系方式
+        get_threads_customers: function(cb) {
+            var url = host + "get_threads_customers";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
         //根据id查找定金
         search_by_id: function(id,cb) {
             var url = host + "search_by_id?id=" + id;
