@@ -22,6 +22,222 @@ var host = "http://211.149.248.241:18028/";
 
 var nav = function(server) {
     return {
+        //根据id查找预约
+        search_appointment_by_id: function(id,cb) {
+            var url = host + "search_appointment_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有预约信息
+        get_appointments: function(cb) {
+            var url = host + "get_appointments";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新业绩
+        update_achievement: function(data,cb) {
+            var url = host + "update_achievement";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除业绩
+        delete_achievement: function(data,cb) {
+            var url = host + "delete_achievement";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找业绩
+        search_achievement_by_id: function(id,cb) {
+            var url = host + "search_achievement_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存业绩
+        save_achievement: function(data,cb) {
+            var url = host + "save_achievement";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有业绩信息
+        get_achievements: function(cb) {
+            var url = host + "get_achievements";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找老师
+        search_teacher_by_id: function(id,cb) {
+            var url = host + "search_teacher_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除老师信息
+        delete_teacher: function(data,cb) {
+            var url = host + "delete_teacher";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新老师信息
+        update_teacher: function(data,cb) {
+            var url = host + "update_teacher";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存老师信息
+        save_teacher: function(data,cb) {
+            var url = host + "save_teacher";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有需求老师信息
+        get_teachers: function(cb) {
+            var url = host + "get_teachers";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除学员
+        delete_student: function(data,cb) {
+            var url = host + "delete_student";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找学员
+        search_student_by_id: function(id,cb) {
+            var url = host + "search_student_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新学员
+        update_student: function(data,cb) {
+            var url = host + "update_student";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存学员
+        save_student: function(data,cb) {
+            var url = host + "save_student";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有跟踪学员信息
+        get_students: function(cb) {
+            var url = host + "get_students";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找分配
+        search_customer_by_id: function(id,cb) {
+            var url = host + "search_customer_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除商机
+        delete_customer: function(data,cb) {
+            var url = host + "delete_customer";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
         //更新商机
         update_customer: function(data,cb) {
             var url = host + "update_customer";

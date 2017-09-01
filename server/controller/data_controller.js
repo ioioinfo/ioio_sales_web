@@ -1135,7 +1135,7 @@ exports.register = function(server, options, next) {
                 });
             },
         },
-        //更新分配
+        //更新商机
         {
             method: "POST",
             path: '/update_customer',
@@ -1158,6 +1158,393 @@ exports.register = function(server, options, next) {
                 });
             }
         },
+        //商机删除
+        {
+            method: "POST",
+            path: '/delete_customer',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_customer(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找商机
+        {
+            method: "GET",
+            path: '/search_customer_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_customer_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有跟踪学员信息
+        {
+            method: 'GET',
+            path: '/get_students',
+            handler: function(request, reply) {
+                api.get_students(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增学员
+        {
+            method: 'POST',
+            path: '/save_student',
+            handler: function(request, reply) {
+                var student = request.payload.student;
+                student = JSON.parse(student);
+                if (!student.thread_id || !student.phone || !student.student_name || !student.sex || !student.birthday
+                     || !student.hobby || !student.school_type || !student.is_foreign_teacher ||
+                     !student.training_experience || !student.training_type || !student.training_way ||
+                     !student.learning_stage || !student.age_stage || !student.person_character) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "student":JSON.stringify(student)
+                };
+
+                api.save_student(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //更新学员
+        {
+            method: "POST",
+            path: '/update_student',
+            handler: function(request, reply) {
+                var student = request.payload.student;
+                student = JSON.parse(student);
+                if (!student.thread_id || !student.phone || !student.student_name || !student.sex || !student.birthday
+                     || !student.hobby || !student.school_type || !student.is_foreign_teacher ||
+                     !student.training_experience || !student.training_type || !student.training_way ||
+                     !student.learning_stage || !student.age_stage || !student.person_character|| !student.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "student":JSON.stringify(student)
+                };
+                api.update_student(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找学员
+        {
+            method: "GET",
+            path: '/search_student_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_student_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //学员删除
+        {
+            method: "POST",
+            path: '/delete_student',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_student(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有需求老师信息
+        {
+            method: 'GET',
+            path: '/get_teachers',
+            handler: function(request, reply) {
+                api.get_teachers(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增老师
+        {
+            method: 'POST',
+            path: '/save_teacher',
+            handler: function(request, reply) {
+                var teacher = request.payload.teacher;
+                teacher = JSON.parse(teacher);
+                if (!teacher.thread_id || !teacher.nationality || !teacher.pronunciation || !teacher.sex
+                    || !teacher.phone) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "teacher":JSON.stringify(teacher)
+                };
+
+                api.save_teacher(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //更新需求老师信息
+        {
+            method: "POST",
+            path: '/update_teacher',
+            handler: function(request, reply) {
+                var teacher = request.payload.teacher;
+                teacher = JSON.parse(teacher);
+                if (!teacher.thread_id || !teacher.nationality || !teacher.pronunciation || !teacher.sex
+                    || !teacher.phone|| !teacher.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "teacher":JSON.stringify(teacher)
+                };
+                api.update_teacher(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //老师信息删除
+        {
+            method: "POST",
+            path: '/delete_teacher',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_teacher(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找学员
+        {
+            method: "GET",
+            path: '/search_teacher_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_teacher_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有业绩信息
+        {
+            method: 'GET',
+            path: '/get_achievements',
+            handler: function(request, reply) {
+                api.get_achievements(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增业绩信息
+        {
+            method: 'POST',
+            path: '/save_achievement',
+            handler: function(request, reply) {
+                var achievement = request.payload.achievement;
+                achievement = JSON.parse(achievement);
+                if (!achievement.thread_id || !achievement.phone || !achievement.promoter_id ||
+                    !achievement.choose_id || !achievement.school_id || !achievement.visit_type
+                     || !achievement.other_recommend || !achievement.origin_source || !achievement.master
+                     || !achievement.temp_promoter_id || !achievement.point_id || !achievement.marketing_master
+                     || !achievement.marketing_activity || !achievement.recommend_student || !achievement.mark) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "achievement":JSON.stringify(achievement)
+                };
+
+                api.save_achievement(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //根据id查找业绩
+        {
+            method: "GET",
+            path: '/search_achievement_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_achievement_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //业绩信息删除
+        {
+            method: "POST",
+            path: '/delete_achievement',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_achievement(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //更新需求老师信息
+        {
+            method: "POST",
+            path: '/update_achievement',
+            handler: function(request, reply) {
+                var achievement = request.payload.achievement;
+                achievement = JSON.parse(achievement);
+                if (!achievement.thread_id || !achievement.phone || !achievement.promoter_id ||
+                    !achievement.choose_id || !achievement.school_id || !achievement.visit_type
+                     || !achievement.other_recommend || !achievement.origin_source || !achievement.master
+                     || !achievement.temp_promoter_id || !achievement.point_id || !achievement.marketing_master
+                     || !achievement.marketing_activity || !achievement.recommend_student || !achievement.mark
+                     || !achievement.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "achievement":JSON.stringify(achievement)
+                };
+                api.update_achievement(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有预约信息
+        {
+            method: 'GET',
+            path: '/get_appointments',
+            handler: function(request, reply) {
+                api.get_appointments(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //根据id查找预约
+        {
+            method: "GET",
+            path: '/search_appointment_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_achievement_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+
+
 
 
     ]);
