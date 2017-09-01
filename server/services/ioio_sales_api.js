@@ -22,6 +22,166 @@ var host = "http://211.149.248.241:18028/";
 
 var nav = function(server) {
     return {
+        //根据id查找定金
+        search_by_id: function(id,cb) {
+            var url = host + "search_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除联系方式
+        delete_connection_way: function(data,cb) {
+            var url = host + "delete_connection_way";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存联系方式
+        save_connection_way: function(data,cb) {
+            var url = host + "save_connection_way";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有联系方式
+        get_connection_ways: function(cb) {
+            var url = host + "get_connection_ways";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新合同明细
+        update_prepayment: function(data,cb) {
+            var url = host + "update_prepayment";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除合同明细
+        delete_prepayment: function(data,cb) {
+            var url = host + "delete_prepayment";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存合同明细
+        save_prepayment: function(data,cb) {
+            var url = host + "save_prepayment";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找定金
+        search_prepayment_by_id: function(id,cb) {
+            var url = host + "search_prepayment_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有定金
+        get_prepayments: function(cb) {
+            var url = host + "get_prepayments";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找合同明细
+        search_detail_by_id: function(id,cb) {
+            var url = host + "search_detail_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除合同明细
+        delete_detail: function(data,cb) {
+            var url = host + "delete_detail";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新合同明细
+        update_detail: function(data,cb) {
+            var url = host + "update_detail";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //保存合同明细
+        save_detail: function(data,cb) {
+            var url = host + "save_detail";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有合同明细
+        get_details: function(cb) {
+            var url = host + "get_details";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
         //根据id查找合同
         search_contract_by_id: function(id,cb) {
             var url = host + "search_contract_by_id?id=" + id;

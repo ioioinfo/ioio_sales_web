@@ -1812,7 +1812,279 @@ exports.register = function(server, options, next) {
                 });
             }
         },
+        //查询所有到合同明细
+        {
+            method: 'GET',
+            path: '/get_details',
+            handler: function(request, reply) {
+                api.get_details(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增合同明细
+        {
+            method: 'POST',
+            path: '/save_detail',
+            handler: function(request, reply) {
+                var detail = request.payload.detail;
+                detail = JSON.parse(detail);
+                if (!detail.contract_id || !detail.product_id || !detail.quantity) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "detail":JSON.stringify(detail)
+                };
 
+                api.save_detail(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //更新合同明细
+        {
+            method: "POST",
+            path: '/update_detail',
+            handler: function(request, reply) {
+                var detail = request.payload.detail;
+                detail = JSON.parse(detail);
+                if (!detail.contract_id || !detail.product_id || !detail.quantity || !detail.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "detail":JSON.stringify(detail)
+                };
+                api.update_detail(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //合同删除明细
+        {
+            method: "POST",
+            path: '/delete_detail',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_detail(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找合同明细
+        {
+            method: "GET",
+            path: '/search_detail_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_detail_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有到定金
+        {
+            method: 'GET',
+            path: '/get_prepayments',
+            handler: function(request, reply) {
+                api.get_prepayments(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //根据id查找定金
+        {
+            method: "GET",
+            path: '/search_prepayment_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_prepayment_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //新增定金
+        {
+            method: 'POST',
+            path: '/save_prepayment',
+            handler: function(request, reply) {
+                var prepayment = request.payload.prepayment;
+                prepayment = JSON.parse(prepayment);
+                if (!prepayment.customer_id || !prepayment.person_id || !prepayment.amount || !prepayment.state) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "prepayment":JSON.stringify(prepayment)
+                };
+
+                api.save_prepayment(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //删除定金
+        {
+            method: "POST",
+            path: '/delete_prepayment',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_prepayment(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //更新定金
+        {
+            method: "POST",
+            path: '/update_prepayment',
+            handler: function(request, reply) {
+                var prepayment = request.payload.prepayment;
+                prepayment = JSON.parse(prepayment);
+                if (!prepayment.customer_id || !prepayment.person_id || !prepayment.amount || !prepayment.state || !prepayment.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "prepayment":JSON.stringify(prepayment)
+                };
+                api.update_prepayment(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有联系方式
+        {
+            method: 'GET',
+            path: '/get_connection_ways',
+            handler: function(request, reply) {
+                api.get_connection_ways(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增联系方式
+        {
+            method: 'POST',
+            path: '/save_connection_way',
+            handler: function(request, reply) {
+                var name = request.payload.name;
+                if (!name) {
+                    return reply({"success":false,"message":"name null","service_info":service_info});
+                }
+                var data = {
+                    "name":name
+                };
+
+                api.save_connection_way(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //删除联系方式
+        {
+            method: "POST",
+            path: '/delete_connection_way',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_connection_way(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找联系方式
+        {
+            method: "GET",
+            path: '/search_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
 
 
     ]);
