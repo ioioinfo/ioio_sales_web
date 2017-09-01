@@ -2314,8 +2314,204 @@ exports.register = function(server, options, next) {
                 });
             }
         },
+        //查询所有CQP
+        {
+            method: 'GET',
+            path: '/get_cpqs',
+            handler: function(request, reply) {
+                api.get_cpqs(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增线CQP
+        {
+            method: 'POST',
+            path: '/save_cpq',
+            handler: function(request, reply) {
+                var cpq = request.payload.cpq;
+                cpq = JSON.parse(cpq);
+                if (!cpq.customer_id || !cpq.amount || !cpq.quantity || !cpq.discount || !cpq.actual_price || !cpq.person_id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "cpq":JSON.stringify(cpq)
+                };
 
+                api.save_cpq(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //删除CQP
+        {
+            method: "POST",
+            path: '/delete_cpq',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_cpq(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //更新CQP
+        {
+            method: "POST",
+            path: '/update_cpq',
+            handler: function(request, reply) {
+                var cpq = request.payload.cpq;
+                cpq = JSON.parse(cpq);
+                if (!cpq.customer_id || !cpq.amount || !cpq.quantity || !cpq.discount || !cpq.actual_price || !cpq.person_id || !cpq.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
 
+                var data = {
+                    "cpq":JSON.stringify(cpq)
+                };
+                api.update_cpq(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找CQP
+        {
+            method: "GET",
+            path: '/search_cpq_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_cpq_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有CQP明细
+        {
+            method: 'GET',
+            path: '/get_cpq_details',
+            handler: function(request, reply) {
+                api.get_cpq_details(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增线CQP明细
+        {
+            method: 'POST',
+            path: '/save_cpq_detail',
+            handler: function(request, reply) {
+                var detail = request.payload.detail;
+                detail = JSON.parse(detail);
+                if (!detail.cpq_id || !detail.product_id || !detail.quantity) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "detail":JSON.stringify(detail)
+                };
+
+                api.save_cpq_detail(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //删除CQP明细
+        {
+            method: "POST",
+            path: '/delete_cpq_detail',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_cpq_detail(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //更新CQP明细
+        {
+            method: "POST",
+            path: '/update_cpq_detail',
+            handler: function(request, reply) {
+                var detail = request.payload.detail;
+                detail = JSON.parse(detail);
+                if (!detail.cpq_id || !detail.product_id || !detail.quantity|| !detail.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "detail":JSON.stringify(detail)
+                };
+                api.update_cpq_detail(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //根据id查找CQP明细
+        {
+            method: "GET",
+            path: '/search_cpq_detail_by_id',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_cpq_detail_by_id(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
 
 
     ]);

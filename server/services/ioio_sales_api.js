@@ -22,6 +22,120 @@ var host = "http://211.149.248.241:18028/";
 
 var nav = function(server) {
     return {
+        //根据id查找CQP明细
+        search_cpq_detail_by_id: function(id,cb) {
+            var url = host + "search_cpq_detail_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新CQP明细
+        update_cpq_detail: function(data,cb) {
+            var url = host + "update_cpq_detail";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除CQP明细
+        delete_cpq_detail: function(data,cb) {
+            var url = host + "delete_cpq_detail";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //新增线CQP明细
+        save_cpq_detail: function(data,cb) {
+            var url = host + "save_cpq_detail";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有CQP明细
+        get_cpq_details: function(cb) {
+            var url = host + "get_cpq_details";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //根据id查找CQP
+        search_cpq_by_id: function(id,cb) {
+            var url = host + "search_cpq_by_id?id=" + id;
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //更新CQP
+        update_cpq: function(data,cb) {
+            var url = host + "update_cpq";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //删除CQP
+        delete_cpq: function(data,cb) {
+            var url = host + "delete_cpq";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //新增线CQP
+        save_cpq: function(data,cb) {
+            var url = host + "save_cpq";
+            uu_request.request(url, data, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    // var info = JSON.parse(body);
+                    cb(err,body);
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
+        //查询所有CQP
+        get_cpqs: function(cb) {
+            var url = host + "get_cpqs";
+            uu_request.get(url, function(err, response, body) {
+                if (!err && response.statusCode === 200) {
+                    cb(err,JSON.parse(body));
+                } else {
+                    cb(true,{message:"网络错误"});
+                }
+            });
+        },
         //根据id查找商机联系方式
         search_intentions_record: function(id,cb) {
             var url = host + "search_intentions_record?id=" + id;
