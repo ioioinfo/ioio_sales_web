@@ -91,6 +91,136 @@ exports.register = function(server, options, next) {
             },
         },
 
+        // 线索信息列表
+        {
+            method: 'GET',
+            path: '/threads',
+            handler: function(request, reply) {
+                return reply.view("threads");
+            },
+        },
+
+        // 线索需求信息列表
+        {
+            method: 'GET',
+            path: '/demands',
+            handler: function(request, reply) {
+                return reply.view("demands");
+            },
+        },
+
+        // 分配信息列表
+        {
+            method: 'GET',
+            path: '/allocations',
+            handler: function(request, reply) {
+                return reply.view("allocations");
+            },
+        },
+
+        // 分配历史信息列表
+        {
+            method: 'GET',
+            path: '/allocation_histories',
+            handler: function(request, reply) {
+                return reply.view("allocation_histories");
+            },
+        },
+
+        // 业务机会列表
+        {
+            method: 'GET',
+            path: '/customers',
+            handler: function(request, reply) {
+                return reply.view("customers");
+            },
+        },
+
+        // 教育培训学员信息列表
+        {
+            method: 'GET',
+            path: '/students_list',
+            handler: function(request, reply) {
+                return reply.view("students_list");
+            },
+        },
+
+        // 教育培训老师需求列表
+        {
+            method: 'GET',
+            path: '/teachers_list',
+            handler: function(request, reply) {
+                return reply.view("teachers_list");
+            },
+        },
+
+        // 线索跟踪业绩信息列表
+        {
+            method: 'GET',
+            path: '/achievements',
+            handler: function(request, reply) {
+                return reply.view("achievements");
+            },
+        },
+
+        // 预约信息列表
+        {
+            method: 'GET',
+            path: '/appointments_list',
+            handler: function(request, reply) {
+                return reply.view("appointments_list");
+            },
+        },
+
+        // 到访信息列表
+        {
+            method: 'GET',
+            path: '/visit_records',
+            handler: function(request, reply) {
+                return reply.view("visit_records");
+            },
+        },
+
+        // 合同列表信息
+        {
+            method: 'GET',
+            path: '/contracts_list',
+            handler: function(request, reply) {
+                return reply.view("contracts_list");
+            },
+        },
+
+        // 合同明细列表
+        {
+            method: 'GET',
+            path: '/contract_detail_list',
+            handler: function(request, reply) {
+                return reply.view("contract_detail_list");
+            },
+        },
+
+        // 定金信息列表
+        {
+            method: 'GET',
+            path: '/prepayments_list',
+            handler: function(request, reply) {
+                return reply.view("prepayments_list");
+            },
+        },
+
+        // 联系方式列表
+        {
+            method: 'GET',
+            path: '/connection_ways_list',
+            handler: function(request, reply) {
+                return reply.view("connection_ways_list");
+            },
+        },
+
+
+
+
+
     ]);
 
     next();

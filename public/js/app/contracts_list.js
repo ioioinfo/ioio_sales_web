@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 191);
+/******/ 	return __webpack_require__(__webpack_require__.s = 195);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23037,7 +23037,11 @@ module.exports = traverseAllChildren;
 /* 188 */,
 /* 189 */,
 /* 190 */,
-/* 191 */
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23061,24 +23065,42 @@ var PageTab = __webpack_require__(82);;
 function alertSearch(id) {
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_center_byId", { id: id }, function (data) {
+  $.get("/search_contract_by_id", { id: id }, function (data) {
     var id = data.rows[0].id;
+    var customer_id = data.rows[0].customer_id;
+    var amount = data.rows[0].amount;
+    var quantity = data.rows[0].quantity;
+    var discount = data.rows[0].discount;
+    var actual_price = data.rows[0].actual_price;
+    var person_id = data.rows[0].person_id;
     var school_id = data.rows[0].school_id;
-    var telephone = data.rows[0].telephone;
-    var responsible_person = data.rows[0].responsible_person;
+    var state = data.rows[0].state;
     $('#id').val(id);
+    $('#customer_id').val(customer_id);
+    $('#amount').val(amount);
+    $('#quantity').val(quantity);
+    $('#discount').val(discount);
+    $('#actual_price').val(actual_price);
+    $('#person_id').val(person_id);
     $('#school_id').val(school_id);
-    $('#telephone').val(telephone);
-    $('#responsible_person').val(responsible_person);
+    $('#state').val(state);
   });
 }
 // 编辑
 function alertEdit(refresh) {
   var id = $('#id').val();
+  var customer_id = $('#customer_id').val();
+  var amount = $('#amount').val();
+  var quantity = $('#quantity').val();
+  var discount = $('#discount').val();
+  var actual_price = $('#actual_price').val();
+  var person_id = $('#person_id').val();
+  var state = $('#state').val();
   var school_id = $('#school_id').val();
-  var telephone = $('#telephone').val();
-  var responsible_person = $('#responsible_person').val();
-  $.post("/update_center", { id: id, school_id: school_id, telephone: telephone, responsible_person: responsible_person }, function (data) {
+  var contract = { id: id, customer_id: customer_id, amount: amount, quantity: quantity,
+    discount: discount, actual_price: actual_price, person_id: person_id,
+    state: state, school_id: school_id };
+  $.post("/update_contract", { contract: JSON.stringify(contract) }, function (data) {
     if (data.success) {
       alert('修改成功');
       $('#edit_part').hide();
@@ -23090,10 +23112,18 @@ function alertEdit(refresh) {
 
 // 新建
 function alertNew(refresh) {
+  var customer_id = $('#new_customer_id').val();
+  var amount = $('#new_amount').val();
+  var quantity = $('#new_quantity').val();
+  var discount = $('#new_discount').val();
+  var actual_price = $('#new_actual_price').val();
+  var person_id = $('#new_person_id').val();
+  var state = $('#new_state').val();
   var school_id = $('#new_school_id').val();
-  var telephone = $('#new_telephone').val();
-  var responsible_person = $('#new_responsible_person').val();
-  $.post("/save_center", { school_id: school_id, telephone: telephone, responsible_person: responsible_person }, function (data) {
+  var contract = { customer_id: customer_id, amount: amount, quantity: quantity,
+    discount: discount, actual_price: actual_price, person_id: person_id,
+    state: state, school_id: school_id };
+  $.post("/save_contract", { contract: JSON.stringify(contract) }, function (data) {
     if (data.success) {
       alert('新建成功');
       $('#new_part').hide();
@@ -23287,7 +23317,91 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u5B66\u6821id:'
+            '\u5546\u673Aid:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'customer_id' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u91D1\u989D:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'amount' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6570\u91CF:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'quantity' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6298\u6263:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'discount' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5B9E\u9645\u4EF7\u683C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'actual_price' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u8BB0\u5F55\u4EBAid:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'person_id' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6821\u533Aid:'
           ),
           React.createElement(
             'span',
@@ -23301,26 +23415,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
+            '\u72B6\u6001:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'telephone' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u8D1F\u8D23\u4EBA:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'responsible_person' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'state' })
           )
         ),
         React.createElement(
@@ -23379,7 +23479,91 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u5B66\u6821id:'
+            '\u5546\u673Aid:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_customer_id' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u91D1\u989D:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_amount' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6570\u91CF:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_quantity' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6298\u6263:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_discount' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5B9E\u9645\u4EF7\u683C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_actual_price' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u8BB0\u5F55\u4EBAid:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_person_id' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6821\u533Aid:'
           ),
           React.createElement(
             'span',
@@ -23393,26 +23577,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
+            '\u72B6\u6001:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_telephone' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u8D1F\u8D23\u4EBA:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_responsible_person' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_state' })
           )
         ),
         React.createElement(
@@ -23477,7 +23647,7 @@ var checkTd = function checkTd(defaultTd) {
   };
   var delect = function delect(e) {
     $.ajax({
-      url: "/delete_center",
+      url: "/delete_contract",
       dataType: 'json',
       type: 'POST',
       data: { "id": id },

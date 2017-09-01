@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 191);
+/******/ 	return __webpack_require__(__webpack_require__.s = 203);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23037,7 +23037,19 @@ module.exports = traverseAllChildren;
 /* 188 */,
 /* 189 */,
 /* 190 */,
-/* 191 */
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23061,24 +23073,63 @@ var PageTab = __webpack_require__(82);;
 function alertSearch(id) {
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_center_byId", { id: id }, function (data) {
+  $.get("/search_student_by_id", { id: id }, function (data) {
     var id = data.rows[0].id;
-    var school_id = data.rows[0].school_id;
-    var telephone = data.rows[0].telephone;
-    var responsible_person = data.rows[0].responsible_person;
+    var thread_id = data.rows[0].thread_id;
+    var student_name = data.rows[0].student_name;
+    var sex = data.rows[0].sex;
+    var age_stage = data.rows[0].age_stage;
+    var birthday = data.rows[0].birthday;
+    var hobby = data.rows[0].hobby;
+    var person_character = data.rows[0].person_character;
+    var school_type = data.rows[0].school_type;
+    var is_foreign_teacher = data.rows[0].is_foreign_teacher;
+    var training_experience = data.rows[0].training_experience;
+    var training_type = data.rows[0].training_type;
+    var training_way = data.rows[0].training_way;
+    var learning_stage = data.rows[0].learning_stage;
+    var phone = data.rows[0].phone;
     $('#id').val(id);
-    $('#school_id').val(school_id);
-    $('#telephone').val(telephone);
-    $('#responsible_person').val(responsible_person);
+    $('#thread_id').val(thread_id);
+    $('#student_name').val(student_name);
+    $('#sex').val(sex);
+    $('#age_stage').val(age_stage);
+    $('#birthday').val(birthday);
+    $('#hobby').val(hobby);
+    $('#person_character').val(person_character);
+    $('#school_type').val(school_type);
+    $('#is_foreign_teacher').val(is_foreign_teacher);
+    $('#training_experience').val(training_experience);
+    $('#training_type').val(training_type);
+    $('#training_way').val(training_way);
+    $('#learning_stage').val(learning_stage);
+    $('#phone').val(phone);
   });
 }
 // 编辑
 function alertEdit(refresh) {
   var id = $('#id').val();
-  var school_id = $('#school_id').val();
-  var telephone = $('#telephone').val();
-  var responsible_person = $('#responsible_person').val();
-  $.post("/update_center", { id: id, school_id: school_id, telephone: telephone, responsible_person: responsible_person }, function (data) {
+  var thread_id = $('#thread_id').val();
+  var student_name = $('#student_name').val();
+  var sex = $('#sex').val();
+  var age_stage = $('#age_stage').val();
+  var birthday = $('#birthday').val();
+  var hobby = $('#hobby').val();
+  var person_character = $('#person_character').val();
+  var school_type = $('#school_type').val();
+  var is_foreign_teacher = $('#is_foreign_teacher').val();
+  var training_experience = $('#training_experience').val();
+  var training_type = $('#training_type').val();
+  var training_way = $('#training_way').val();
+  var learning_stage = $('#learning_stage').val();
+  var phone = $('#phone').val();
+  var student = { id: id, thread_id: thread_id, student_name: student_name, sex: sex,
+    age_stage: age_stage, hobby: hobby, person_character: person_character, school_type: school_type,
+    is_foreign_teacher: is_foreign_teacher, training_experience: training_experience,
+    training_type: training_type, training_way: training_way, learning_stage: learning_stage,
+    phone: phone, birthday: birthday
+  };
+  $.post("/update_student", { student: JSON.stringify(student) }, function (data) {
     if (data.success) {
       alert('修改成功');
       $('#edit_part').hide();
@@ -23090,10 +23141,27 @@ function alertEdit(refresh) {
 
 // 新建
 function alertNew(refresh) {
-  var school_id = $('#new_school_id').val();
-  var telephone = $('#new_telephone').val();
-  var responsible_person = $('#new_responsible_person').val();
-  $.post("/save_center", { school_id: school_id, telephone: telephone, responsible_person: responsible_person }, function (data) {
+  var thread_id = $('#new_thread_id').val();
+  var student_name = $('#new_student_name').val();
+  var sex = $('#new_sex').val();
+  var age_stage = $('#new_age_stage').val();
+  var birthday = $('#new_birthday').val();
+  var hobby = $('#new_hobby').val();
+  var person_character = $('#new_person_character').val();
+  var school_type = $('#new_school_type').val();
+  var is_foreign_teacher = $('#new_is_foreign_teacher').val();
+  var training_experience = $('#new_training_experience').val();
+  var training_type = $('#new_training_type').val();
+  var training_way = $('#new_training_way').val();
+  var learning_stage = $('#new_learning_stage').val();
+  var phone = $('#new_phone').val();
+  var student = { thread_id: thread_id, student_name: student_name, sex: sex,
+    age_stage: age_stage, hobby: hobby, person_character: person_character, school_type: school_type,
+    is_foreign_teacher: is_foreign_teacher, training_experience: training_experience,
+    training_type: training_type, training_way: training_way, learning_stage: learning_stage,
+    phone: phone, birthday: birthday
+  };
+  $.post("/save_student", { student: JSON.stringify(student) }, function (data) {
     if (data.success) {
       alert('新建成功');
       $('#new_part').hide();
@@ -23287,12 +23355,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u5B66\u6821id:'
+            '\u7EBF\u7D22id:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'school_id' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'thread_id' })
           )
         ),
         React.createElement(
@@ -23301,12 +23369,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
+            '\u59D3\u540D:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'telephone' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'student_name' })
           )
         ),
         React.createElement(
@@ -23315,12 +23383,166 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u8D1F\u8D23\u4EBA:'
+            '\u5E74\u9F84:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'responsible_person' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'age_stage' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6027\u522B:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'sex' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u751F\u65E5:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'birthday' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5174\u8DA3:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'hobby' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6027\u683C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'person_character' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5B66\u6821\u7C7B\u578B:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'school_type' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u662F\u5426\u4E0A\u8FC7\u5916\u6559:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'is_foreign_teacher' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u57F9\u8BAD\u7ECF\u5386:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'training_experience' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u57F9\u8BAD\u5F62\u5F0F:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'training_type' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5B66\u4E60\u65B9\u5F0F:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'training_way' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5B66\u751F\u6027\u8D28:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'learning_stage' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u7EBF\u7D22\u624B\u673A:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'phone' })
           )
         ),
         React.createElement(
@@ -23379,12 +23601,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u5B66\u6821id:'
+            'id:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_school_id' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_id' })
           )
         ),
         React.createElement(
@@ -23393,12 +23615,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
+            '\u7EBF\u7D22id:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_telephone' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_thread_id' })
           )
         ),
         React.createElement(
@@ -23407,12 +23629,180 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u8D1F\u8D23\u4EBA:'
+            '\u59D3\u540D:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_responsible_person' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_student_name' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5E74\u9F84:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_age_stage' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6027\u522B:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_sex' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u751F\u65E5:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_birthday' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5174\u8DA3:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_hobby' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u6027\u683C:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_person_character' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5B66\u6821\u7C7B\u578B:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_school_type' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u662F\u5426\u4E0A\u8FC7\u5916\u6559:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_is_foreign_teacher' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u57F9\u8BAD\u7ECF\u5386:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_training_experience' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u57F9\u8BAD\u5F62\u5F0F:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_training_type' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5B66\u4E60\u65B9\u5F0F:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_training_way' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u5B66\u751F\u6027\u8D28:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_learning_stage' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u7EBF\u7D22\u624B\u673A:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_phone' })
           )
         ),
         React.createElement(
@@ -23477,7 +23867,7 @@ var checkTd = function checkTd(defaultTd) {
   };
   var delect = function delect(e) {
     $.ajax({
-      url: "/delete_center",
+      url: "/delete_student",
       dataType: 'json',
       type: 'POST',
       data: { "id": id },

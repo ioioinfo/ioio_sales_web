@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 191);
+/******/ 	return __webpack_require__(__webpack_require__.s = 202);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23037,7 +23037,18 @@ module.exports = traverseAllChildren;
 /* 188 */,
 /* 189 */,
 /* 190 */,
-/* 191 */
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23061,24 +23072,28 @@ var PageTab = __webpack_require__(82);;
 function alertSearch(id) {
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_center_byId", { id: id }, function (data) {
+  $.get("/search_prepayment_by_id", { id: id }, function (data) {
     var id = data.rows[0].id;
-    var school_id = data.rows[0].school_id;
-    var telephone = data.rows[0].telephone;
-    var responsible_person = data.rows[0].responsible_person;
+    var customer_id = data.rows[0].customer_id;
+    var amount = data.rows[0].amount;
+    var state = data.rows[0].state;
+    var person_id = data.rows[0].person_id;
     $('#id').val(id);
-    $('#school_id').val(school_id);
-    $('#telephone').val(telephone);
-    $('#responsible_person').val(responsible_person);
+    $('#customer_id').val(customer_id);
+    $('#amount').val(amount);
+    $('#state').val(state);
+    $('#person_id').val(person_id);
   });
 }
 // 编辑
 function alertEdit(refresh) {
   var id = $('#id').val();
-  var school_id = $('#school_id').val();
-  var telephone = $('#telephone').val();
-  var responsible_person = $('#responsible_person').val();
-  $.post("/update_center", { id: id, school_id: school_id, telephone: telephone, responsible_person: responsible_person }, function (data) {
+  var customer_id = $('#customer_id').val();
+  var amount = $('#amount').val();
+  var state = $('#state').val();
+  var person_id = $('#person_id').val();
+  var prepayment = { id: id, customer_id: customer_id, amount: amount, state: state, person_id: person_id };
+  $.post("/update_prepayment", { prepayment: JSON.stringify(prepayment) }, function (data) {
     if (data.success) {
       alert('修改成功');
       $('#edit_part').hide();
@@ -23090,10 +23105,12 @@ function alertEdit(refresh) {
 
 // 新建
 function alertNew(refresh) {
-  var school_id = $('#new_school_id').val();
-  var telephone = $('#new_telephone').val();
-  var responsible_person = $('#new_responsible_person').val();
-  $.post("/save_center", { school_id: school_id, telephone: telephone, responsible_person: responsible_person }, function (data) {
+  var customer_id = $('#new_customer_id').val();
+  var amount = $('#new_amount').val();
+  var state = $('#new_state').val();
+  var person_id = $('#new_person_id').val();
+  var prepayment = { id: id, customer_id: customer_id, amount: amount, state: state, person_id: person_id };
+  $.post("/save_prepayment", { prepayment: JSON.stringify(prepayment) }, function (data) {
     if (data.success) {
       alert('新建成功');
       $('#new_part').hide();
@@ -23287,12 +23304,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u5B66\u6821id:'
+            '\u5546\u673Aid:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'school_id' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'customer_id' })
           )
         ),
         React.createElement(
@@ -23301,12 +23318,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
+            '\u4ED8\u6B3E\u4EBAid:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'telephone' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'person_id' })
           )
         ),
         React.createElement(
@@ -23315,12 +23332,26 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u8D1F\u8D23\u4EBA:'
+            '\u5B9A\u91D1:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'responsible_person' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'amount' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u72B6\u6001:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'state' })
           )
         ),
         React.createElement(
@@ -23379,12 +23410,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u5B66\u6821id:'
+            '\u5546\u673Aid:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_school_id' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_customer_id' })
           )
         ),
         React.createElement(
@@ -23393,12 +23424,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
+            '\u4ED8\u6B3E\u4EBAid:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_telephone' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_person_id' })
           )
         ),
         React.createElement(
@@ -23407,12 +23438,26 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u8D1F\u8D23\u4EBA:'
+            '\u5B9A\u91D1:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_responsible_person' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_amount' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u72B6\u6001:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_state' })
           )
         ),
         React.createElement(
@@ -23477,7 +23522,7 @@ var checkTd = function checkTd(defaultTd) {
   };
   var delect = function delect(e) {
     $.ajax({
-      url: "/delete_center",
+      url: "/delete_prepayment",
       dataType: 'json',
       type: 'POST',
       data: { "id": id },
