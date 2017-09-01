@@ -999,6 +999,166 @@ exports.register = function(server, options, next) {
                 });
             }
         },
+        //查询所有分配历史
+        {
+            method: 'GET',
+            path: '/get_allocation_histories',
+            handler: function(request, reply) {
+                api.get_allocation_histories(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增分配
+        {
+            method: 'POST',
+            path: '/save_allocation_history',
+            handler: function(request, reply) {
+                var allocation_history = request.payload.allocation_history;
+                allocation_history = JSON.parse(allocation_history);
+                if (!allocation_history.thread_id || !allocation_history.person_id1 || !allocation_history.person_id2 || !allocation_history.department_id1 || !allocation_history.department_id2) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "allocation_history":JSON.stringify(allocation_history)
+                };
+
+                api.save_allocation_history(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //根据id查找分配
+        {
+            method: "GET",
+            path: '/search_allocation_history_byId',
+            handler: function(request, reply) {
+                var id = request.query.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id null","service_info":service_info});
+                }
+                api.search_allocation_history_byId(id,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //分配删除
+        {
+            method: "POST",
+            path: '/delete_allocation_history',
+            handler: function(request, reply) {
+                var id = request.payload.id;
+                if (!id) {
+                    return reply({"success":false,"message":"id wrong","service_info":service_info});
+                }
+                var data = {
+                    "id" : id
+                };
+                api.delete_allocation_history(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //更新分配
+        {
+            method: "POST",
+            path: '/update_allocation_history',
+            handler: function(request, reply) {
+                var allocation_history = request.payload.allocation_history;
+                allocation_history = JSON.parse(allocation_history);
+                if (!allocation_history.thread_id || !allocation_history.person_id1 || !allocation_history.person_id2 || !allocation_history.department_id1 || !allocation_history.department_id2 || !allocation_history.id) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "allocation_history":JSON.stringify(allocation_history)
+                };
+                api.update_allocation_history(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+        //查询所有商机
+        {
+            method: 'GET',
+            path: '/get_customers',
+            handler: function(request, reply) {
+                api.get_customers(function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //新增商机
+        {
+            method: 'POST',
+            path: '/save_customer',
+            handler: function(request, reply) {
+                var customer = request.payload.customer;
+                customer = JSON.parse(customer);
+                if (!customer.thread_id || !customer.phone || !customer.name || !customer.sex || !customer.relationship || !customer.email) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+                var data = {
+                    "customer":JSON.stringify(customer)
+                };
+
+                api.save_customer(data,function(err,rows){
+                    if (!err) {
+                        return reply({"success":true,"message":rows.message});
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            },
+        },
+        //更新分配
+        {
+            method: "POST",
+            path: '/update_customer',
+            handler: function(request, reply) {
+                var customer = request.payload.customer;
+                customer = JSON.parse(customer);
+                if (!customer.thread_id || !customer.phone || !customer.name || !customer.sex || !customer.relationship || !customer.id || !customer.email || !customer.state) {
+                    return reply({"success":false,"message":"params wrong","service_info":service_info});
+                }
+
+                var data = {
+                    "customer":JSON.stringify(customer)
+                };
+                api.update_customer(data,function(err,rows){
+                    if (!err) {
+                        return reply(rows);
+                    }else {
+                        return reply({"success":false,"message":rows.message});
+                    }
+                });
+            }
+        },
+
 
     ]);
 
