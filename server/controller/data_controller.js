@@ -1534,7 +1534,7 @@ exports.register = function(server, options, next) {
                 if (!id) {
                     return reply({"success":false,"message":"id null","service_info":service_info});
                 }
-                api.search_achievement_by_id(id,function(err,rows){
+                api.search_appointment_by_id(id,function(err,rows){
                     if (!err) {
                         return reply(rows);
                     }else {
