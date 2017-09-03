@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 207);
+/******/ 	return __webpack_require__(__webpack_require__.s = 196);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23042,18 +23042,7 @@ module.exports = traverseAllChildren;
 /* 193 */,
 /* 194 */,
 /* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23077,31 +23066,25 @@ var PageTab = __webpack_require__(82);;
 function alertSearch(id) {
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_teacher_by_id", { id: id }, function (data) {
+  $.get("/search_cpq_detail_by_id", { id: id }, function (data) {
     var id = data.rows[0].id;
-    var thread_id = data.rows[0].thread_id;
-    var nationality = data.rows[0].nationality;
-    var pronunciation = data.rows[0].pronunciation;
-    var sex = data.rows[0].sex;
-    var phone = data.rows[0].phone;
+    var cpq_id = data.rows[0].cpq_id;
+    var product_id = data.rows[0].product_id;
+    var quantity = data.rows[0].quantity;
     $('#id').val(id);
-    $('#thread_id').val(thread_id);
-    $('#nationality').val(nationality);
-    $('#pronunciation').val(pronunciation);
-    $('#sex').val(sex);
-    $('#phone').val(phone);
+    $('#cpq_id').val(cpq_id);
+    $('#quantity').val(quantity);
+    $('#product_id').val(product_id);
   });
 }
 // 编辑
 function alertEdit(refresh) {
   var id = $('#id').val();
-  var thread_id = $('#thread_id').val();
-  var nationality = $('#nationality').val();
-  var sex = $('#sex').val();
-  var pronunciation = $('#pronunciation').val();
-  var phone = $('#phone').val();
-  var teacher = { id: id, thread_id: thread_id, nationality: nationality, sex: sex, pronunciation: pronunciation, phone: phone };
-  $.post("/update_teacher", { teacher: JSON.stringify(teacher) }, function (data) {
+  var cpq_id = $('#cpq_id').val();
+  var quantity = $('#quantity').val();
+  var product_id = $('#product_id').val();
+  var detail = { id: id, cpq_id: cpq_id, quantity: quantity, product_id: product_id };
+  $.post("/update_cpq_detail", { detail: JSON.stringify(detail) }, function (data) {
     if (data.success) {
       alert('修改成功');
       $('#edit_part').hide();
@@ -23113,13 +23096,11 @@ function alertEdit(refresh) {
 
 // 新建
 function alertNew(refresh) {
-  var thread_id = $('#new_thread_id').val();
-  var nationality = $('#new_nationality').val();
-  var sex = $('#new_sex').val();
-  var pronunciation = $('#new_pronunciation').val();
-  var phone = $('#new_phone').val();
-  var teacher = { thread_id: thread_id, nationality: nationality, sex: sex, pronunciation: pronunciation, phone: phone };
-  $.post("/save_teacher", { teacher: JSON.stringify(teacher) }, function (data) {
+  var cpq_id = $('#cpq_id').val();
+  var quantity = $('#quantity').val();
+  var product_id = $('#product_id').val();
+  var detail = { id: id, cpq_id: cpq_id, quantity: quantity, product_id: product_id };
+  $.post("/save_cpq_detail", { detail: JSON.stringify(detail) }, function (data) {
     if (data.success) {
       alert('新建成功');
       $('#new_part').hide();
@@ -23216,6 +23197,9 @@ var AdminRight = function (_React$Component2) {
     value: function handNew(e) {
       $('#background').show();
       $('#new_part').show();
+      var name = $('#new_name').val('');
+      var code = $('#new_code').val('');
+      var source_level = $('#new_source_level').val('');
     }
   }, {
     key: 'render',
@@ -23313,12 +23297,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u7EBF\u7D22id:'
+            '\u5408\u540C\u53F7:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'thread_id' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'cpq_id' })
           )
         ),
         React.createElement(
@@ -23327,12 +23311,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u56FD\u7C4D:'
+            '\u4EA7\u54C1id:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'nationality' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'product_id' })
           )
         ),
         React.createElement(
@@ -23341,12 +23325,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u8BED\u79CD:'
+            '\u6570\u91CF:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'pronunciation' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'quantity' })
           )
         ),
         React.createElement(
@@ -23355,26 +23339,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u6027\u522B:'
+            '\u603B\u4EF7:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'sex' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'phone' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'total_price' })
           )
         ),
         React.createElement(
@@ -23433,12 +23403,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u7EBF\u7D22id:'
+            '\u5408\u540C\u53F7:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_thread_id' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'cpq_id' })
           )
         ),
         React.createElement(
@@ -23447,12 +23417,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u56FD\u7C4D:'
+            '\u4EA7\u54C1id:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_nationality' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'product_id' })
           )
         ),
         React.createElement(
@@ -23461,12 +23431,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u8BED\u79CD:'
+            '\u6570\u91CF:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_pronunciation' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'quantity' })
           )
         ),
         React.createElement(
@@ -23475,26 +23445,12 @@ var AlertNew = function (_React$Component4) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u6027\u522B:'
+            '\u603B\u4EF7:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_sex' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_phone' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'total_price' })
           )
         ),
         React.createElement(
@@ -23559,7 +23515,7 @@ var checkTd = function checkTd(defaultTd) {
   };
   var delect = function delect(e) {
     $.ajax({
-      url: "/delete_teacher",
+      url: "/delete_cpq_detail",
       dataType: 'json',
       type: 'POST',
       data: { "id": id },

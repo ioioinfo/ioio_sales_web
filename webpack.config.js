@@ -36,6 +36,10 @@ module.exports = {
         contract_detail_list: './app/contract_detail_list.jsx',
         prepayments_list: './app/prepayments_list.jsx',
         connection_ways_list: './app/connection_ways_list.jsx',
+        threads_customers_list: './app/threads_customers_list.jsx',
+        intentions_customers_list: './app/intentions_customers_list.jsx',
+        cpqs_list: './app/cpqs_list.jsx',
+        cpq_details_list: './app/cpq_details_list.jsx',
     },
     output: {
         path: __dirname,

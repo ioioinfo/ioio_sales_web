@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 207);
+/******/ 	return __webpack_require__(__webpack_require__.s = 203);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23049,11 +23049,7 @@ module.exports = traverseAllChildren;
 /* 200 */,
 /* 201 */,
 /* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23077,55 +23073,25 @@ var PageTab = __webpack_require__(82);;
 function alertSearch(id) {
   $('#background').show();
   $('#edit_part').show();
-  $.get("/search_teacher_by_id", { id: id }, function (data) {
+  $.get("/search_intentions_record", { id: id }, function (data) {
     var id = data.rows[0].id;
-    var thread_id = data.rows[0].thread_id;
-    var nationality = data.rows[0].nationality;
-    var pronunciation = data.rows[0].pronunciation;
-    var sex = data.rows[0].sex;
+    var customer_id = data.rows[0].customer_id;
     var phone = data.rows[0].phone;
+    var state = data.rows[0].state;
+    var way = data.rows[0].way;
+    var call_in_time = data.rows[0].call_in_time;
+    var call_time = data.rows[0].call_time;
+    var email = data.rows[0].email;
+    var message = data.rows[0].message;
     $('#id').val(id);
-    $('#thread_id').val(thread_id);
-    $('#nationality').val(nationality);
-    $('#pronunciation').val(pronunciation);
-    $('#sex').val(sex);
+    $('#customer_id').val(customer_id);
     $('#phone').val(phone);
-  });
-}
-// 编辑
-function alertEdit(refresh) {
-  var id = $('#id').val();
-  var thread_id = $('#thread_id').val();
-  var nationality = $('#nationality').val();
-  var sex = $('#sex').val();
-  var pronunciation = $('#pronunciation').val();
-  var phone = $('#phone').val();
-  var teacher = { id: id, thread_id: thread_id, nationality: nationality, sex: sex, pronunciation: pronunciation, phone: phone };
-  $.post("/update_teacher", { teacher: JSON.stringify(teacher) }, function (data) {
-    if (data.success) {
-      alert('修改成功');
-      $('#edit_part').hide();
-      $('#background').hide();
-      refresh();
-    }
-  });
-}
-
-// 新建
-function alertNew(refresh) {
-  var thread_id = $('#new_thread_id').val();
-  var nationality = $('#new_nationality').val();
-  var sex = $('#new_sex').val();
-  var pronunciation = $('#new_pronunciation').val();
-  var phone = $('#new_phone').val();
-  var teacher = { thread_id: thread_id, nationality: nationality, sex: sex, pronunciation: pronunciation, phone: phone };
-  $.post("/save_teacher", { teacher: JSON.stringify(teacher) }, function (data) {
-    if (data.success) {
-      alert('新建成功');
-      $('#new_part').hide();
-      $('#background').hide();
-      refresh();
-    }
+    $('#state').val(state);
+    $('#way').val(way);
+    $('#call_in_time').val(call_in_time);
+    $('#call_time').val(call_time);
+    $('#email').val(email);
+    $('#message').val(message);
   });
 }
 
@@ -23169,7 +23135,6 @@ var AdminRight = function (_React$Component2) {
     _this2.handleSort = _this2.handleSort.bind(_this2);
     _this2.loadData = _this2.loadData.bind(_this2);
     _this2.refresh = _this2.refresh.bind(_this2);
-    _this2.handNew = _this2.handNew.bind(_this2);
     // 初始化一个空对象
     _this2.state = { tabthitems: [], tabtritems: [], allNum: 0, everyNum: 20, thisPage: 1, sort: { name: "", dir: "" } };
     return _this2;
@@ -23208,15 +23173,6 @@ var AdminRight = function (_React$Component2) {
     value: function refresh() {
       this.loadData({});
     }
-
-    // 新建
-
-  }, {
-    key: 'handNew',
-    value: function handNew(e) {
-      $('#background').show();
-      $('#new_part').show();
-    }
   }, {
     key: 'render',
     value: function render() {
@@ -23239,14 +23195,13 @@ var AdminRight = function (_React$Component2) {
           ),
           React.createElement(
             'button',
-            { className: 'admin_creat_button1', onClick: this.handNew },
+            { className: 'admin_creat_button1' },
             '\u65B0 \u5EFA'
           )
         ),
         React.createElement(Table, { tabthitems: this.state.tabthitems, tabtritems: this.state.tabtritems, sort: this.state.sort, onSort: this.handleSort, refresh: this.refresh, checkTd: checkTd }),
         React.createElement(PageTab, { setPage: this.setPage, allNum: this.state.allNum, everyNum: this.state.everyNum, thisPage: this.state.thisPage }),
         React.createElement(AlertEdit, { refresh: this.refresh }),
-        React.createElement(AlertNew, { refresh: this.refresh }),
         React.createElement('div', { id: 'background', className: 'position_absolute' })
       );
     }
@@ -23279,8 +23234,8 @@ var AlertEdit = function (_React$Component3) {
   }, {
     key: 'handSave',
     value: function handSave() {
-      var refresh = this.props.refresh;
-      alertEdit(refresh);
+      $('#edit_part').hide();
+      $('#background').hide();
     }
   }, {
     key: 'render',
@@ -23313,12 +23268,12 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u7EBF\u7D22id:'
+            '\u5546\u673Aid:'
           ),
           React.createElement(
             'span',
             { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'thread_id' })
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'customer_id' })
           )
         ),
         React.createElement(
@@ -23327,49 +23282,7 @@ var AlertEdit = function (_React$Component3) {
           React.createElement(
             'span',
             { className: 'edit_part_div_name' },
-            '\u56FD\u7C4D:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'nationality' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u8BED\u79CD:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'pronunciation' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u6027\u522B:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'sex' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
+            '\u7EBF\u7D22\u624B\u673A:'
           ),
           React.createElement(
             'span',
@@ -23379,8 +23292,92 @@ var AlertEdit = function (_React$Component3) {
         ),
         React.createElement(
           'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u72B6\u6001:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'state' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u65B9\u5F0Fid:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'way' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u547C\u5165\u65F6\u95F4:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'call_in_time' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u901A\u8BDD\u65F6\u95F4:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'call_time' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u90AE\u7BB1\u5730\u5740:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'email' })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'edit_part_div' },
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_name' },
+            '\u77ED\u4FE1\u5185\u5BB9:'
+          ),
+          React.createElement(
+            'span',
+            { className: 'edit_part_div_input_wrap' },
+            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'message' })
+          )
+        ),
+        React.createElement(
+          'div',
           { className: 'edit_button_wrap', onClick: this.handSave },
-          '\u4FEE \u6539'
+          '\u786E \u5B9A'
         )
       );
     }
@@ -23391,130 +23388,10 @@ var AlertEdit = function (_React$Component3) {
 
 ;
 
-var AlertNew = function (_React$Component4) {
-  _inherits(AlertNew, _React$Component4);
-
-  function AlertNew(props) {
-    _classCallCheck(this, AlertNew);
-
-    var _this4 = _possibleConstructorReturn(this, (AlertNew.__proto__ || Object.getPrototypeOf(AlertNew)).call(this, props));
-
-    _this4.handClick = _this4.handClick.bind(_this4);
-    _this4.handNew = _this4.handNew.bind(_this4);
-    return _this4;
-  }
-
-  _createClass(AlertNew, [{
-    key: 'handClick',
-    value: function handClick(e) {
-      $('#new_part').hide();
-      $('#background').hide();
-    }
-  }, {
-    key: 'handNew',
-    value: function handNew() {
-      var refresh = this.props.refresh;
-      alertNew(refresh);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return React.createElement(
-        'div',
-        { id: 'new_part', className: 'position_absolute animation_one' },
-        React.createElement(
-          'div',
-          { className: 'text_align_right' },
-          React.createElement('i', { className: 'fa fa-times fa-fw', onClick: this.handClick })
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u7EBF\u7D22id:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_thread_id' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u56FD\u7C4D:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_nationality' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u8BED\u79CD:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_pronunciation' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u6027\u522B:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_sex' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_part_div' },
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_name' },
-            '\u624B\u673A:'
-          ),
-          React.createElement(
-            'span',
-            { className: 'edit_part_div_input_wrap' },
-            React.createElement('input', { type: 'text', className: 'edit_part_div_input', id: 'new_phone' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'edit_button_wrap', onClick: this.handNew },
-          '\u65B0 \u5EFA'
-        )
-      );
-    }
-  }]);
-
-  return AlertNew;
-}(React.Component);
-
-;
-
 // 右边 头部
 
-var AdminRightTop = function (_React$Component5) {
-  _inherits(AdminRightTop, _React$Component5);
+var AdminRightTop = function (_React$Component4) {
+  _inherits(AdminRightTop, _React$Component4);
 
   function AdminRightTop() {
     _classCallCheck(this, AdminRightTop);
@@ -23559,7 +23436,7 @@ var checkTd = function checkTd(defaultTd) {
   };
   var delect = function delect(e) {
     $.ajax({
-      url: "/delete_teacher",
+      url: "/delete_connection_record",
       dataType: 'json',
       type: 'POST',
       data: { "id": id },

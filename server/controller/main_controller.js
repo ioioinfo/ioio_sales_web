@@ -217,8 +217,41 @@ exports.register = function(server, options, next) {
             },
         },
 
+        // 线索联系记录信息列表
+        {
+            method: 'GET',
+            path: '/threads_customers_list',
+            handler: function(request, reply) {
+                return reply.view("threads_customers_list");
+            },
+        },
 
+        // 商机联系记录列表
+        {
+            method: 'GET',
+            path: '/intentions_customers_list',
+            handler: function(request, reply) {
+                return reply.view("intentions_customers_list");
+            },
+        },
 
+        // CPQ信息列表
+        {
+            method: 'GET',
+            path: '/cpqs_list',
+            handler: function(request, reply) {
+                return reply.view("cpqs_list");
+            },
+        },
+
+        // cpq明细列表
+        {
+            method: 'GET',
+            path: '/cpq_details_list',
+            handler: function(request, reply) {
+                return reply.view("cpq_details_list");
+            },
+        },
 
 
     ]);
